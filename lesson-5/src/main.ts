@@ -191,17 +191,19 @@ console.group('2. Pagalbiniai tipai');
     model: 'X1' | 'X2' | 'X3' | 'X4' | 'X5',
     make: number,
     color?: string,
+    engine: 'electric' | 'hybrid',
   };
 
   const cars: BMWCar[] = [
     {
-      brand: 'BMW', model: 'X1', make: 2000, color: 'black',
+      brand: 'BMW', model: 'X1', make: 2000, color: 'black', engine: 'electric',
+    },{
+       brand: 'BMW', model: 'X2', make: 2001, engine: 'hybrid', 
+    },{
+     brand: 'BMW', model: 'X3', make: 2002, color: 'red', engine: 'hybrid',
+    },{ 
+      brand: 'BMW', model: 'X4', make: 2003, engine: 'electric',
     },
-    { brand: 'BMW', model: 'X2', make: 2001 },
-    {
-      brand: 'BMW', model: 'X3', make: 2002, color: 'red',
-    },
-    { brand: 'BMW', model: 'X4', make: 2003 },
   ];
 
   // 10 min
@@ -228,7 +230,7 @@ console.group('2. Pagalbiniai tipai');
 
     type BMWCarRefactored = Omit<BMWCar, 'brand' | 'model'> & {
       model: `${BMWCar['brand']} ${BMWCar['model']}`
-    } 
+    };
 
     const refactorCar = ({brand, model, ...rest}: BMWCar): BMWCarRefactored => {
       return ({
@@ -237,12 +239,25 @@ console.group('2. Pagalbiniai tipai');
       });
     } 
 
-const refactorBmwCar = cars.map(refactorCar);
+    const refactorBmwCar = cars.map(refactorCar);
 
     console.log('refactorBmwCar', refactorBmwCar);
 
-// 2.2. improvization
-//type BMWCarRefactored2 = Omit
+//2.2. improvization
+{
+    type BMWCarRefactored2 = Omit<BMWCar, 'model' | 'engine'> & {model : `${BMWCar['model']} ${BMWCar['engine']}`};
+
+    const refactorCar2 = ({model, engine, ...rest}: BMWCar): BMWCarRefactored2 => {
+      return ({
+        model: `${model} ${engine}`,
+        ...rest
+      });
+    }
+
+    const refactorBmwCar2 = cars.map(refactorCar2);
+    console.log('refactorBmwCar2', refactorBmwCar2);
+
+}
 
     // pvz
     type NameLt = 'Pienius' | 'Serbentas' | 'Kliaudas' | 'Verundis';

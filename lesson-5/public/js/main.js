@@ -92,13 +92,14 @@ console.group('2. Pagalbiniai tipai');
 {
     const cars = [
         {
-            brand: 'BMW', model: 'X1', make: 2000, color: 'black',
+            brand: 'BMW', model: 'X1', make: 2000, color: 'black', engine: 'electric',
+        }, {
+            brand: 'BMW', model: 'X2', make: 2001, engine: 'hybrid',
+        }, {
+            brand: 'BMW', model: 'X3', make: 2002, color: 'red', engine: 'hybrid',
+        }, {
+            brand: 'BMW', model: 'X4', make: 2003, engine: 'electric',
         },
-        { brand: 'BMW', model: 'X2', make: 2001 },
-        {
-            brand: 'BMW', model: 'X3', make: 2002, color: 'red',
-        },
-        { brand: 'BMW', model: 'X4', make: 2003 },
     ];
     console.group('2.1. Sukurkite funkciją "selectWithColor" kuri atrenka visas mašinas turinčias aprašytą spalvą, ir aprašykite joms tipą BMWCarFull su visomis privalomomis savybėmis');
     {
@@ -123,6 +124,14 @@ console.group('2. Pagalbiniai tipai');
         };
         const refactorBmwCar = cars.map(refactorCar);
         console.log('refactorBmwCar', refactorBmwCar);
+        const refactorCar2 = ({ model, engine, ...rest }) => {
+            return ({
+                model: `${model} ${engine}`,
+                ...rest
+            });
+        };
+        const refactorBmwCar2 = cars.map(refactorCar2);
+        console.log('refactorBmwCar2', refactorBmwCar2);
     }
     console.groupEnd();
 }
