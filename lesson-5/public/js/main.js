@@ -113,16 +113,55 @@ console.group('2. Pagalbiniai tipai');
         });
     }
     console.groupEnd();
-    console.groupCollapsed('2.2. Sukurkite funkciją "refactorBmwCar" kurti perkuria mašiną.  Pašalina mašinos savybė brand, o model savybę pakeičia taip, kad joje būtų markė ir modelis atskirta tarpu. Visos kitos savybės paliekamos tokios pat');
+    console.group('2.2. Sukurkite funkciją "refactorBmwCar" kuri perkuria mašiną.  Pašalina mašinos savybė brand, o model savybę pakeičia taip, kad joje būtų markė ir modelis atskirta tarpu. Visos kitos savybės paliekamos tokios pat');
     {
+        const refactorCar = ({ brand, model, ...rest }) => {
+            return ({
+                model: `${brand} ${model}`,
+                ...rest
+            });
+        };
+        const refactorBmwCar = cars.map(refactorCar);
+        console.log('refactorBmwCar', refactorBmwCar);
     }
     console.groupEnd();
 }
 console.groupEnd();
 console.group('3. Tipų apjungimas ir “&” sankirtos operatorius');
 {
-    console.groupCollapsed('3.1. Sukurkite tipą UserRegistration naudodami tipą User. UserRegistration tipas turi turėti papildomas ir privalomas savybes emailConfirmation ir passwordConfirmation, bei pašalintą savybę cartItems. Sukūrus tipą UserRegistration sukurkite funkciją "registerUser" kuri priimtų UserRegistration tipo parametrą ir grąžintų User tipo objektą, jeigu sutampa email su emailConfirmation ir password su passwordConfirmation. Jeigu pakartotinės savybės nesutampa turi būti grąžinama "null" reikšmė');
+    console.group('3.1. Sukurkite tipą UserRegistration naudodami tipą User. UserRegistration tipas turi turėti papildomas ir privalomas savybes emailConfirmation ir passwordConfirmation, bei pašalintą savybę cartItems. Sukūrus tipą UserRegistration sukurkite funkciją "registerUser" kuri priimtų UserRegistration tipo parametrą ir grąžintų User tipo objektą, jeigu sutampa email su emailConfirmation ir password su passwordConfirmation. Jeigu pakartotinės savybės nesutampa turi būti grąžinama "null" reikšmė');
     {
+        const registerUser = ({ email, emailConfirmation, password, passwordConfirmation, ...userProps }) => {
+            if (email === emailConfirmation && password === passwordConfirmation) {
+                return {
+                    ...userProps,
+                    email,
+                    password,
+                    cartItems: []
+                };
+            }
+            return null;
+        };
+        const userRegistrationValid = {
+            surname: 'Zul',
+            email: 'zul@zul.com',
+            emailConfirmation: 'zul@zul.com',
+            password: 'tarzanas123',
+            passwordConfirmation: 'tarzanas123',
+        };
+        const userRegistrationNotValid = {
+            surname: 'Bea',
+            email: 'bea@bea.com',
+            emailConfirmation: 'bea@bea.com',
+            password: 'cubicPow',
+            passwordConfirmation: 'cubicPo',
+        };
+        console.log('Registration atempt: ', JSON.stringify(userRegistrationValid, null, 4));
+        const registrationResult1 = registerUser(userRegistrationValid);
+        console.log('Result:', registrationResult1);
+        console.log('Registration atempt: ', JSON.stringify(userRegistrationNotValid, null, 4));
+        const registrationResult2 = registerUser(userRegistrationNotValid);
+        console.log('Result:', registrationResult2);
     }
     console.groupEnd();
 }

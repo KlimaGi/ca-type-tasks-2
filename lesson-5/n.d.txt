@@ -1,5 +1,5 @@
 Perskaityti [60 min]
-  https://www.typescriptlang.org/docs/handbook/2/types-from-types.html
+ * https://www.typescriptlang.org/docs/handbook/2/types-from-types.html
   praleisti Generics
 
   knyga 

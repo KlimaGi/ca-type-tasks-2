@@ -13,6 +13,14 @@ type Product = {
 type ProductCategory = 'Food' | 'Clothes' | 'Other';
 
 type Catalog = Record<ProductCategory, Product[]>;
+// -----
+type Properties = 'propA' | 'propB';
+type MyMappedType<Properties extends string | number | symbol> = {
+  [P in Properties] : P;
+};
+
+type MyNewType = MyMappedType<'propA' | 'propB'>;
+
 
 /*
   Užduočių atlikimo eiga:
@@ -215,9 +223,33 @@ console.group('2. Pagalbiniai tipai');
   console.groupEnd();
 
   // 15 min
-  console.groupCollapsed('2.2. Sukurkite funkciją "refactorBmwCar" kurti perkuria mašiną.  Pašalina mašinos savybė brand, o model savybę pakeičia taip, kad joje būtų markė ir modelis atskirta tarpu. Visos kitos savybės paliekamos tokios pat');
+  console.group('2.2. Sukurkite funkciją "refactorBmwCar" kuri perkuria mašiną.  Pašalina mašinos savybė brand, o model savybę pakeičia taip, kad joje būtų markė ir modelis atskirta tarpu. Visos kitos savybės paliekamos tokios pat');
   {
 
+    type BMWCarRefactored = Omit<BMWCar, 'brand' | 'model'> & {
+      model: `${BMWCar['brand']} ${BMWCar['model']}`
+    } 
+
+    const refactorCar = ({brand, model, ...rest}: BMWCar): BMWCarRefactored => {
+      return ({
+        model: `${brand} ${model}`,
+        ...rest
+      });
+    } 
+
+const refactorBmwCar = cars.map(refactorCar);
+
+    console.log('refactorBmwCar', refactorBmwCar);
+
+// 2.2. improvization
+//type BMWCarRefactored2 = Omit
+
+    // pvz
+    type NameLt = 'Pienius' | 'Serbentas' | 'Kliaudas' | 'Verundis';
+    type SurnameLT = 'Kelpokas' | 'Bauda' | 'Penktokas';
+
+    type FullNameLt = `${NameLt} ${SurnameLT}`;
+   
   }
   console.groupEnd();
 }
@@ -236,13 +268,59 @@ console.group('3. Tipų apjungimas ir “&” sankirtos operatorius');
   };
 
   // 30 min
-  console.groupCollapsed('3.1. Sukurkite tipą UserRegistration naudodami tipą User. UserRegistration tipas turi turėti papildomas ir privalomas savybes emailConfirmation ir passwordConfirmation, bei pašalintą savybę cartItems. Sukūrus tipą UserRegistration sukurkite funkciją "registerUser" kuri priimtų UserRegistration tipo parametrą ir grąžintų User tipo objektą, jeigu sutampa email su emailConfirmation ir password su passwordConfirmation. Jeigu pakartotinės savybės nesutampa turi būti grąžinama "null" reikšmė');
+  console.group('3.1. Sukurkite tipą UserRegistration naudodami tipą User. UserRegistration tipas turi turėti papildomas ir privalomas savybes emailConfirmation ir passwordConfirmation, bei pašalintą savybę cartItems. Sukūrus tipą UserRegistration sukurkite funkciją "registerUser" kuri priimtų UserRegistration tipo parametrą ir grąžintų User tipo objektą, jeigu sutampa email su emailConfirmation ir password su passwordConfirmation. Jeigu pakartotinės savybės nesutampa turi būti grąžinama "null" reikšmė');
   /* Hints:
     * Omit<Type, Keys>
     * X extends Y || &
     * Type index'es
   */
   {
+
+type UserRegistration = Omit<User, 'carItems'> & {
+  emailConfirmation: User['email'], passwordConfirmation : User['password'],
+}
+
+const registerUser = ({
+  email, 
+  emailConfirmation, 
+  password, 
+  passwordConfirmation, 
+  ...userProps
+}: UserRegistration): User | null => {
+if(email === emailConfirmation && password === passwordConfirmation){
+  return {
+    ...userProps,
+    email,
+    password,
+    cartItems: []
+  };
+}
+return null;
+}
+
+const userRegistrationValid: UserRegistration = {
+  surname: 'Zul',
+  email: 'zul@zul.com',
+  emailConfirmation: 'zul@zul.com',
+  password: 'tarzanas123',
+  passwordConfirmation: 'tarzanas123',
+};
+const userRegistrationNotValid: UserRegistration = {
+  surname: 'Bea',
+  email: 'bea@bea.com',
+  emailConfirmation: 'bea@bea.com',
+  password: 'cubicPow',
+  passwordConfirmation: 'cubicPo',
+};
+
+console.log('Registration atempt: ', JSON.stringify(userRegistrationValid, null, 4));
+const registrationResult1 = registerUser(userRegistrationValid);
+console.log('Result:', registrationResult1);
+
+console.log('Registration atempt: ', JSON.stringify(userRegistrationNotValid, null, 4));
+const registrationResult2 = registerUser(userRegistrationNotValid);
+console.log('Result:', registrationResult2);
+
 
   }
   console.groupEnd();
