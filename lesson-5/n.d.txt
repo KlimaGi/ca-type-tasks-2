@@ -2,16 +2,16 @@ Perskaityti [60 min]
  * https://www.typescriptlang.org/docs/handbook/2/types-from-types.html
   praleisti Generics
 
-  knyga 
+ * knyga  "Head First Design Patterns" 
 
 Pažiūrėti:
-  https://www.youtube.com/watch?v=RjQpep8fBdo&ab_channel=DmytroDanylov
-  https://www.youtube.com/watch?v=PJjeHzvi_VQ&ab_channel=Prisma
+*  https://www.youtube.com/watch?v=RjQpep8fBdo&ab_channel=DmytroDanylov
+-  https://www.youtube.com/watch?v=PJjeHzvi_VQ&ab_channel=Prisma  30 min
 
-  https://www.youtube.com/watch?v=T-HGdc8L-7w&t=2s&ab_channel=TheCodingTrain
-  https://www.youtube.com/watch?v=rHiSsgFRgx4&t=2s&ab_channel=TheCodingTrain
-  https://www.youtube.com/watch?v=MfxBfRD0FVU&list=PLRqwX-V7Uu6YgpA3Oht-7B4NBQwFVe3pr&index=19&ab_channel=TheCodingTrain
-  https://www.youtube.com/watch?v=8a5BkwuZRK0&list=PLRqwX-V7Uu6YgpA3Oht-7B4NBQwFVe3pr&index=20&ab_channel=TheCodingTrain
+  https://www.youtube.com/watch?v=T-HGdc8L-7w&t=2s&ab_channel=TheCodingTrain   20 min
+  https://www.youtube.com/watch?v=rHiSsgFRgx4&t=2s&ab_channel=TheCodingTrain   7 min
+  https://www.youtube.com/watch?v=MfxBfRD0FVU&list=PLRqwX-V7Uu6YgpA3Oht-7B4NBQwFVe3pr&index=19&ab_channel=TheCodingTrain   17 min
+  https://www.youtube.com/watch?v=8a5BkwuZRK0&list=PLRqwX-V7Uu6YgpA3Oht-7B4NBQwFVe3pr&index=20&ab_channel=TheCodingTrain   9 min
 
 Manijakams:
- https://www.youtube.com/watch?v=v9ejT8FO-7I&list=PLCOO6j3cDu94FP8pMPOigpyy0XoQkdKBW&ab_channel=ChristopherOkhravi
+ https://www.youtube.com/watch?v=v9ejT8FO-7I&list=PLCOO6j3cDu94FP8pMPOigpyy0XoQkdKBW&ab_channel=ChristopherOkhravi   35 min

@@ -14,12 +14,45 @@ type ProductCategory = 'Food' | 'Clothes' | 'Other';
 
 type Catalog = Record<ProductCategory, Product[]>;
 // -----
+
 type Properties = 'propA' | 'propB';
-type MyMappedType<Properties extends string | number | symbol> = {
-  [P in Properties] : P;
+// simple type
+// type MyMappedType = {
+//   [P in Properties] : P;
+// };
+
+// generic type
+// type MyMappedType<Properties extends string | number | symbol> = {
+//   [P in Properties] : P;
+// };
+// new type from generic
+//type MyNewType = MyMappedType<'propA' | 'propB'>;
+
+// take whole type instead generic
+type MyMappedType<T> = {
+  [P in keyof T] : T[P];
+};
+type MyNewType = MyMappedType<{a: 'a', b: 'b'}>
+// ----------
+type Pick1<T, Properties extends keyof T> = {
+  [P in Properties]: T[P];
 };
 
-type MyNewType = MyMappedType<'propA' | 'propB'>;
+type MyNewType2 = Pick1<{a: 'a', b: 'b', c: 'c'}, 'a' | 'c'>;
+
+type Record1<K extends keyof any, T> ={
+  [P in K]: T;
+};
+//const someRecord: Record1<string, number> = {};
+const someRecord: Record2 = {};
+
+someRecord.apples = 10;
+someRecord.oranges = 10;
+
+interface Record2 {
+  [key: string]: number;
+}
+
 
 
 /*
