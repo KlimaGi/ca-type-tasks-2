@@ -1,17 +1,27 @@
-// import { add } from "./helpers/calc";
+// tipu formavimas ir susaistymas
 
-const add = (a: number, b: number): number => a + b;
+type User = {
+    email: string,
+    password: string,
+    mobile: string,
+    name: string,
+    surname: string,
+    gender: "male" | "female",
+    age: number,
+    income?: number,
+    married?: boolean,
+  };
 
-const a: number = 7;
-const b: number = 8;
+  // papildomu savybiu pridejimas
+  type UserRegistration = User & {
+    emailConfirmation: User['email'],
+    passwordConfirmation: User['password'],
+  };
 
-console.log('{a, b}', { a, b });
-console.log({
-  'add(a, b)': add(a, b),
-  'add(3, 10)': add(3, 10),
-});
+  // keiciamos tik tam tikros savybes
+  type UserUpdate = {
+    [Key in keyof Omit<User, 'password'>]?: User[Key]
+  };
+  // User[Key] - savybes tipas, bus toks, kaip User tipo savybe raktu Key
 
-const numbersArr: number[] = [1, 3, 5, 7];
-const doubleNumbers = numbersArr.map(x => x * 2);
-
-console.log('doubleNumbers', doubleNumbers);
+  // 
