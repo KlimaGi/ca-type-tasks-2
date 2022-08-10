@@ -6,7 +6,7 @@ type User = {
     mobile: string,
     name: string,
     surname: string,
-    gender: "male" | "female",
+    gender: 'male' | 'female',
     age: number,
     income?: number,
     married?: boolean,
@@ -24,8 +24,9 @@ type User = {
   };
   // User[Key] - savybes tipas, bus toks, kaip User tipo savybe raktu Key
 
-  // keyof - skirtas gauti iteruojamu esamo tipo savybiu pavadinimus
-// objekto savebe naudojant indeksa/rakta
+// keyof - skirtas gauti iteruojamu esamo tipo savybiu pavadinimus
+// objekto savybe naudojant indeksa/rakta
+
 type Product = {
   id: string | number;
   description: string,
@@ -47,7 +48,7 @@ type User1 = {
   email: string,
   password: string,
   mobile: string,
-readonly  name: string,
+readonly name: string,
   age: number,
   income: number,
   married?: boolean,
@@ -100,7 +101,8 @@ type User2 = {
     surname: string,
 };
 type User2Update = Omit<User2, 'id' | 'password'>;
-// naudojamas formuojant naujus tipus is keliu tipu apart nereikalingu savybiu  arba formuojamas tipas siekiant saugoti atnaujinamas duomenu savybes
+// naudojamas formuojant naujus tipus is keliu tipu apart nereikalingu savybiu  
+// arba formuojamas tipas siekiant saugoti atnaujinamas duomenu savybes
 
 type CreateButton = (color: string, onClick: () => void,) => HTMLButtonElement;
 type Button = ReturnType<CreateButton>;
@@ -108,10 +110,36 @@ type Button = ReturnType<CreateButton>;
 // naudingas naudojant bibliotekas
 // galima aprasyti tipa kintamajam, kurio reiksme bus grazinta kvieciant funcija
 
+// ------------
+interface SomeUser{
+  name: string;
+  id: string;
+  email?: string | undefined;
+  phone?: string;
+}
+
+
+const merge = (user: SomeUser, overrides:SomeUserOptionals): SomeUser => 
+return {
+  ...user,
+  ...overrides
+};
+
+console.log('merge', merge(
+  { name: 'Jack',
+  id: 'foo',
+  email: 'some@some.com',
+  },{
+  email: 'somebazz@some.com'
+  }));
+
+type SomeUserOptionals = Partial<SomeUser>;
+type RequiredSomeUser = Required<SomeUser>;
+type JustEmailAndName = Pick<SomeUser, 'email' | 'name'>;
 
 
 
-
+// ---------------
 
   type Person = {
   readonly name: string,
