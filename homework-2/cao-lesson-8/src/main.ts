@@ -1,3 +1,9 @@
+enum HeightUnits {
+  CENTIMETERS = 'cm',
+  METERS = 'm',
+  INCHES = 'in'
+};
+
 const capitalize = (word : string): string => {
   const words = word.trim().split(' ');
   const capitalizedWords = words.map(w => w[0].toUpperCase() + w.slice(1));
@@ -7,10 +13,19 @@ const capitalize = (word : string): string => {
 class Person {
   private name!: string;
   private surname!: string;
+  private age!: number;
+  private height!: number;
 
-  constructor(name: string, surname: string){
+  constructor(
+    name: string, 
+    surname: string, 
+    age: number, 
+    height: number
+    ){
     this.setName(name);
     this.setSurname(surname);
+    this.setAge(age);
+    this.setHeight(height);
   }
 
   public setName(name:string){
@@ -27,19 +42,45 @@ class Person {
     this.surname = capitalize(surname);
   }
 
+  public setAge(age: number){
+    if(age % 1 !== 0) throw new Error('Amzius turi buti sveikas skaicius');
+    if(age < 1 ) throw new Error('Amzius negali buti mazesnis nei 1');
+    if(age > 150 ) throw new Error('Amzius negali buti didesnis uz 150');
+
+    this.age = age;
+  }
+
+  public setHeight(height: number, units: HeightUnits = HeightUnits.CENTIMETERS){
+  switch(units){
+    case HeightUnits.CENTIMETERS: this.height = height; break;
+    case HeightUnits.METERS: this.height = height * 100; break;
+    case HeightUnits.INCHES: this.height = height * 2.54; break;
+    default: break;
+  }
+    
+  }
+
   public getFullname(){
     return `${this.name} ${this.surname}`
   }
+
+  public getAge() {
+    return this.age;
+  }
+
+  public getHeight(){
+    return this.height;
+  }
 }
 
-
+const people: Person[] = [
+    new Person(' Serbentautas', 'Bordiuras', 23, 189),
+    new Person('varaloja ', 'karkse', 25, 1.7, HeightUnits.METERS),
+    new Person('Suteivis mareivis', 'Kirvokas', 36, 196, HeightUnits.INCHES),
+  ];
 console.group('1. Sukurkite Person klasei savybes "name" ir "surname". Kiekvienai iš jų sukurkite setterius, ir bendrą getterį fullname');
 {
-  const people: Person[] = [
-    new Person(' Serbentautas', 'Bordiuras'),
-    new Person('varaloja ', 'karkse'),
-    new Person('Suteivis mareivis', 'Kirvokas'),
-  ];
+  
 const fullname: string[] = people.map((p) => p.getFullname());
 
 console.log(fullname);
@@ -48,13 +89,15 @@ console.groupEnd();
 
 console.group('2. Sukurkite Person klasei savybę "age". Inkapsuliuokite šią savybę taip, jog reikšmė galėtų būti tik sveiki skaičiai nuo 1 iki 150');
 {
-
+const ages = people.map(p => p.getAge());
+console.log('ages', ages);
 }
 console.groupEnd();
 
 console.group('3. Sukurkite Person klasei savybę "height" kurios vertė būtų saugoma centimetrais. Sukurkite šiai savybei setterį, kuris pirmu parametru priimtų reikšmę, o antru parametru priimtų matavimo vienetus: "cm" | "m" | "in". Jeigu antras parametras nėra perduotas, numatytas(default) matavimo vienetas turi būti cm. Getteris turi grąžinti reikšmę centimetrais.');
 {
-
+const heights = people.map(p => p.getHeight());
+console.log('heights', heights);
 }
 console.groupEnd();
 
