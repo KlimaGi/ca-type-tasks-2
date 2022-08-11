@@ -86,11 +86,11 @@ switch(units){
     return `${this.name} ${this.surname}`
   }
 
-  public getAge() {
+  public getAge(): number {
     return this.age;
   }
 
-  public getHeight(){
+  public getHeight(): number{
     switch(Person.heightUnits){
       case HeightUnits.CENTIMETERS: return this.height;
       case HeightUnits.METERS: return this.height / 100;
@@ -100,12 +100,20 @@ switch(units){
     
   }
 
-  public getWeight(){
+  public getWeight(): number{
     switch(Person.weightUnits){
       case WeightUnits.KG: return this.weight;
       case WeightUnits.LBS: return this.weight / 0.45;
       default: return this.weight;
     }
+  }
+
+  public toString(): string {
+   let formattedPerson = `${this.name} ${this.surname}\n`;
+  formattedPerson += `\theight: ${this.getHeight()} ${Person.heightUnits}\n`;
+  formattedPerson += `\tweight: ${this.getWeight()} ${Person.weightUnits}\n`;
+
+  return formattedPerson;
   }
 }
 
@@ -192,6 +200,33 @@ console.groupEnd();
 
 console.group('8. Sukurkite klasei Person metodą "toString". Kuris paverstų žmogaus savybes gražiu formatu: vardas ir pavardė pirmoje eilutėje, o "height" ir "weight" savybės atskirose eilutėse, atitrauktos nuo kairio krašto per "tab" simbolį, ir su matavimo vienetais(kurie išsaugoti) statinėse Person klasės savybėse');
 
+{
+const person3: Person = new Person(
+   'SomeName',
+   'Suri',
+   30,
+  170,
+ 80
+);
+
+const person4: Person = new Person(
+   'Same',
+   'Sour',
+   37,
+  160,
+ 50
+);
+
+Person.heightUnits = HeightUnits.METERS;
+Person.weightUnits = WeightUnits.KG;
+console.log('person3', person3.toString());
+console.log('person4', person4.toString());
+
+Person.heightUnits = HeightUnits.INCHES;
+Person.weightUnits = WeightUnits.LBS;
+console.log('person3', person3.toString());
+console.log('person4', person4.toString());
+}
 
 class Person1 {
   private name: string;

@@ -100,6 +100,12 @@ class Person {
             default: return this.weight;
         }
     }
+    toString() {
+        let formattedPerson = `${this.name} ${this.surname}\n`;
+        formattedPerson += `\theight: ${this.getHeight()} ${Person.heightUnits}\n`;
+        formattedPerson += `\tweight: ${this.getWeight()} ${Person.weightUnits}\n`;
+        return formattedPerson;
+    }
 }
 const people = [
     new Person(' Serbentautas', 'Bordiuras', 23, 189, 75, WeightUnits.KG, HeightUnits.METERS),
@@ -163,6 +169,18 @@ console.group('7. Analogiškai pagal [4.]-[6.] punktus sukurkite savybę weight 
 }
 console.groupEnd();
 console.group('8. Sukurkite klasei Person metodą "toString". Kuris paverstų žmogaus savybes gražiu formatu: vardas ir pavardė pirmoje eilutėje, o "height" ir "weight" savybės atskirose eilutėse, atitrauktos nuo kairio krašto per "tab" simbolį, ir su matavimo vienetais(kurie išsaugoti) statinėse Person klasės savybėse');
+{
+    const person3 = new Person('SomeName', 'Suri', 30, 170, 80);
+    const person4 = new Person('Same', 'Sour', 37, 160, 50);
+    Person.heightUnits = HeightUnits.METERS;
+    Person.weightUnits = WeightUnits.KG;
+    console.log('person3', person3.toString());
+    console.log('person4', person4.toString());
+    Person.heightUnits = HeightUnits.INCHES;
+    Person.weightUnits = WeightUnits.LBS;
+    console.log('person3', person3.toString());
+    console.log('person4', person4.toString());
+}
 class Person1 {
     name;
     constructor(name) {
