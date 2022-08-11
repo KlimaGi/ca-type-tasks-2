@@ -241,7 +241,6 @@ console.groupCollapsed('1. Sukurkite funkciją, kuri paverčia žmogaus objektą
   console.table(identities);
 }
 console.groupEnd();
-
 console.groupCollapsed('2. Sukurkite funkciją, kuri paverčia žmogaus objektą -> {married: boolean, hasCar: boolean} objektu. Naudojant šią funkciją performuokite visą žmonių masyvą.');
 {
   // type TaskProps = {

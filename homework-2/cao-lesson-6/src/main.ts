@@ -24,7 +24,7 @@ console.group('3. Parašykite funkciją, kuri grąžina vienarūšių primityvi�
   // Sprendimas ir rezultatų spausdinimas
 }
 console.groupEnd();
-
+ 
 console.group('4. Parašykite funkciją,  kuri pirmu parametru priima string | number | boolen, grąžina to tipo masyvą su perduota reikšme tiek kartų, kiek nurodyta antru parametru');
 {
   // ('a', 2) -> ['a', 'a']

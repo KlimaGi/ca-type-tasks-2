@@ -11,6 +11,8 @@ const capitalize = (word : string): string => {
 }
 
 class Person {
+  static heightUnits: HeightUnits = HeightUnits.CENTIMETERS;
+
   private name!: string;
   private surname!: string;
   private age!: number;
@@ -20,12 +22,13 @@ class Person {
     name: string, 
     surname: string, 
     age: number, 
-    height: number
+    height: number,
+    heightUnits?: HeightUnits,
     ){
     this.setName(name);
     this.setSurname(surname);
     this.setAge(age);
-    this.setHeight(height);
+    this.setHeight(height, heightUnits);
   }
 
   public setName(name:string){
@@ -69,7 +72,13 @@ class Person {
   }
 
   public getHeight(){
-    return this.height;
+    switch(Person.heightUnits){
+      case HeightUnits.CENTIMETERS: return this.height;
+      case HeightUnits.METERS: return this.height / 100;
+      case HeightUnits.INCHES: return this.height / 2.54;
+      default: return this.height;
+    }
+    
   }
 }
 
@@ -101,9 +110,16 @@ console.log('heights', heights);
 }
 console.groupEnd();
 
-console.group('4. Sukurkite Person klasei statinę savybę "heightUnits". Jos tipas turi būti išvardinimas(enum), kurio pasirinkimai yra: "CM", "M", "IN". Numatytoji(default) "heightUnits" reikšmė turi būti centimetrai');
+console.group('4. Sukurkite Person klasei statinę savybę "heightUnits". Jos tipas turi būti išvardinimas(enum), kurio pasirinkimai yra: "cm", "m", "in". Numatytoji(default) "heightUnits" reikšmė turi būti centimetrai');
 {
-
+  console.log('Matavimo vienetai pakeisti i:');
+  console.dir(Person.heightUnits);
+  Person.heightUnits = HeightUnits.METERS;
+  console.dir(Person.heightUnits);
+  Person.heightUnits = HeightUnits.INCHES;
+  console.dir(Person.heightUnits);
+  Person.heightUnits = HeightUnits.CENTIMETERS;
+  console.dir(Person.heightUnits);
 }
 console.groupEnd();
 
@@ -112,6 +128,20 @@ console.group('5. "height" setterio antram parametrui pakeiskite sąjungos tipą
 console.group('6. "height" geteriui sukurkite logiką, jog jis grąžintų matavimo vienetus, pagal statinės savybės "heightUnits" reikšmę.');
 {
 
+Person.heightUnits = HeightUnits.METERS;
+const heightsInMeters = people.map(p => p.getHeight());
+console.log('Matavimo vienetai pakeisti i: ', HeightUnits.METERS);
+console.log(heightsInMeters);
+
+Person.heightUnits = HeightUnits.INCHES;
+const heightsInInches = people.map(p => p.getHeight());
+console.log('Matavimo vienatai pakeisti i: ', HeightUnits.INCHES);
+console.log(heightsInInches);
+
+Person.heightUnits = HeightUnits.CENTIMETERS;
+const heightInCentimeters = people.map(p => p.getHeight());
+console.log('Matavimo vienetai pakeisti i: ', HeightUnits.CENTIMETERS);
+console.log(heightInCentimeters);
 }
 console.groupEnd();
 
