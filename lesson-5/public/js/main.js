@@ -1,4 +1,7 @@
 "use strict";
+const someRecord = {};
+someRecord.apples = 10;
+someRecord.oranges = 10;
 console.group('1. Tipų indeksai');
 {
     const users = [
@@ -124,14 +127,16 @@ console.group('2. Pagalbiniai tipai');
         };
         const refactorBmwCar = cars.map(refactorCar);
         console.log('refactorBmwCar', refactorBmwCar);
-        const refactorCar2 = ({ model, engine, ...rest }) => {
-            return ({
-                model: `${model} ${engine}`,
-                ...rest
-            });
-        };
-        const refactorBmwCar2 = cars.map(refactorCar2);
-        console.log('refactorBmwCar2', refactorBmwCar2);
+        {
+            const refactorCar2 = ({ model, engine, ...rest }) => {
+                return ({
+                    model: `${model} ${engine}`,
+                    ...rest
+                });
+            };
+            const refactorBmwCar2 = cars.map(refactorCar2);
+            console.log('refactorBmwCar2', refactorBmwCar2);
+        }
     }
     console.groupEnd();
 }
@@ -177,8 +182,47 @@ console.group('3. Tipų apjungimas ir “&” sankirtos operatorius');
 console.groupEnd();
 console.group('4. Tipų susaistymas');
 {
-    console.groupCollapsed('4.1. Turite tipą Accomodation, jo visos savybės yra pasiekiamos ir keičiamos tiesiogiai. Naudodami saistymo metodologiją sukurkite tipą EncapsulatedAccomodation. Panaudokite kiekvieną Accomodation tipo savybę, kad performuoti ją į setterio ir getterrio funkcijų poras. Sukūrę tipą, aprašykite funkciją "encapsulateAccomodation", kuri priimtų Accomodation tipo parametrą ir grąžintų EncapsulatedAccomodation objektą su veikiančiais setteriais ir getteriais.');
+    console.group('4.1. Turite tipą Accomodation, jo visos savybės yra pasiekiamos ir keičiamos tiesiogiai. Naudodami saistymo metodologiją sukurkite tipą EncapsulatedAccomodation. Panaudokite kiekvieną Accomodation tipo savybę, kad performuoti ją į setterio ir getterrio funkcijų poras. Sukūrę tipą, aprašykite funkciją "encapsulateAccomodation", kuri priimtų Accomodation tipo parametrą ir grąžintų EncapsulatedAccomodation objektą su veikiančiais setteriais ir getteriais.');
     {
+        const encapsulateAccommodation = ({ address, squares, type }) => ({
+            setAddress: (value) => { address = value; },
+            setSquares: (value) => { squares = value; },
+            setType: (value) => { type = value; },
+            getAddress: () => address,
+            getSquares: () => squares,
+            getType: () => type,
+        });
+        const accommodation1 = {
+            address: 'Some str. 17',
+            squares: 224,
+            type: 'House',
+        };
+        console.log('Encapsulating accommodation1: ', JSON.stringify(accommodation1, null, 4));
+        const encapsulatedAccommodation1 = encapsulateAccommodation(accommodation1);
+        console.log('Changing properties using setters...');
+        encapsulatedAccommodation1.setAddress('Some str. 19');
+        encapsulatedAccommodation1.setSquares(123);
+        console.log('using getters after changes', {
+            'getAddress()': encapsulatedAccommodation1.getAddress(),
+            'getSquares()': encapsulatedAccommodation1.getSquares(),
+            'getType()': encapsulatedAccommodation1.getType(),
+        });
+        console.log('-------------');
+        const accommodation2 = {
+            address: 'Vilniaus g. 31, Vilnius',
+            squares: 73,
+            type: 'Flat',
+        };
+        console.log('Encapsulating accommodation2:', JSON.stringify(accommodation2, null, 4));
+        const encapsulatedAccommodation2 = encapsulateAccommodation(accommodation2);
+        console.log('Changing properties using setters -----');
+        encapsulatedAccommodation2.setSquares(110);
+        encapsulatedAccommodation2.setType('House');
+        console.log('using getters after changes', {
+            'getAddress()': encapsulatedAccommodation1.getAddress(),
+            'getSquares()': encapsulatedAccommodation2.getSquares(),
+            'getTypes()': encapsulatedAccommodation2.getType()
+        });
     }
     console.groupEnd();
 }

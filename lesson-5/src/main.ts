@@ -382,18 +382,18 @@ console.group('4. Tipų susaistymas');
     type: 'Flat' | 'House' | 'Cottage',
   }
 
-  type AccomodationSetters = {
+  type AccommodationSetters = {
     [Key in keyof Accommodation as `set${Capitalize<Key>}`]: (value: Accommodation[Key]) => void
   }
-type AccomodationGetters = {
+type AccommodationGetters = {
     [Key in keyof Accommodation as `get${Capitalize<Key>}`]: () => Accommodation[Key]
   }
 
-  type EncapsulatedAccomodation = AccomodationSetters & AccomodationGetters;
+  type EncapsulatedAccommodation = AccommodationSetters & AccommodationGetters;
 
 
   // 50 min
-  console.groupCollapsed('4.1. Turite tipą Accomodation, jo visos savybės yra pasiekiamos ir keičiamos tiesiogiai. Naudodami saistymo metodologiją sukurkite tipą EncapsulatedAccomodation. Panaudokite kiekvieną Accomodation tipo savybę, kad performuoti ją į setterio ir getterrio funkcijų poras. Sukūrę tipą, aprašykite funkciją "encapsulateAccomodation", kuri priimtų Accomodation tipo parametrą ir grąžintų EncapsulatedAccomodation objektą su veikiančiais setteriais ir getteriais.');
+  console.group('4.1. Turite tipą Accomodation, jo visos savybės yra pasiekiamos ir keičiamos tiesiogiai. Naudodami saistymo metodologiją sukurkite tipą EncapsulatedAccomodation. Panaudokite kiekvieną Accomodation tipo savybę, kad performuoti ją į setterio ir getterrio funkcijų poras. Sukūrę tipą, aprašykite funkciją "encapsulateAccomodation", kuri priimtų Accomodation tipo parametrą ir grąžintų EncapsulatedAccomodation objektą su veikiančiais setteriais ir getteriais.');
   /* Hints:
      * TS: mapped types
      * TS: keyof operator
@@ -404,11 +404,11 @@ type AccomodationGetters = {
      * OOP: encapsulation
    */
   {
-    const encapsulateAccomodation = ({
+    const encapsulateAccommodation = ({
       address,
       squares,
       type
-    }: Accommodation): EncapsulatedAccomodation => ({
+    }: Accommodation): EncapsulatedAccommodation => ({
       setAddress: (value) => {address = value},
       setSquares: (value) => {squares = value},
       setType: (value) => {type = value},
@@ -417,10 +417,39 @@ type AccomodationGetters = {
       getType: () => type,
     });
 
+   const accommodation1: Accommodation = {
+    address: 'Some str. 17',
+    squares: 224,
+    type: 'House',
+   };
+   console.log('Encapsulating accommodation1: ', JSON.stringify(accommodation1, null, 4));
+   const encapsulatedAccommodation1 = encapsulateAccommodation(accommodation1);
+   console.log('Changing properties using setters...');
+   encapsulatedAccommodation1.setAddress('Some str. 19');
+   encapsulatedAccommodation1.setSquares(123);
+   console.log('using getters after changes', {
+    'getAddress()': encapsulatedAccommodation1.getAddress(),
+    'getSquares()': encapsulatedAccommodation1.getSquares(),
+    'getType()': encapsulatedAccommodation1.getType(),
+   });
+   console.log('-------------');
     
+   const accommodation2: Accommodation = {
+    address: 'Vilniaus g. 31, Vilnius',
+    squares: 73,
+    type: 'Flat',
+   };
 
-
-
+   console.log('Encapsulating accommodation2:', JSON.stringify(accommodation2, null, 4));
+   const encapsulatedAccommodation2 = encapsulateAccommodation(accommodation2);
+   console.log('Changing properties using setters -----');
+   encapsulatedAccommodation2.setSquares(110);
+   encapsulatedAccommodation2.setType('House');
+   console.log('using getters after changes', {
+    'getAddress()': encapsulatedAccommodation1.getAddress(),
+    'getSquares()': encapsulatedAccommodation2.getSquares(),
+    'getTypes()': encapsulatedAccommodation2.getType()
+   });
 
   }
   console.groupEnd();
