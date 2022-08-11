@@ -4,6 +4,11 @@ enum HeightUnits {
   INCHES = 'in'
 };
 
+enum WeightUnits {
+  KG = 'kg',
+  LBS = 'lbs'
+}
+
 const capitalize = (word : string): string => {
   const words = word.trim().split(' ');
   const capitalizedWords = words.map(w => w[0].toUpperCase() + w.slice(1));
@@ -12,23 +17,28 @@ const capitalize = (word : string): string => {
 
 class Person {
   static heightUnits: HeightUnits = HeightUnits.CENTIMETERS;
+  static weightUnits: WeightUnits = WeightUnits.KG;
 
   private name!: string;
   private surname!: string;
   private age!: number;
   private height!: number;
+  private weight!: number;
 
   constructor(
     name: string, 
     surname: string, 
     age: number, 
     height: number,
+    weight: number,
+    weightUnits?: WeightUnits,
     heightUnits?: HeightUnits,
     ){
     this.setName(name);
     this.setSurname(surname);
     this.setAge(age);
     this.setHeight(height, heightUnits);
+    this.setWeight(weight, weightUnits)
   }
 
   public setName(name:string){
@@ -63,6 +73,15 @@ class Person {
     
   }
 
+public setWeight(weight: number, units: WeightUnits = WeightUnits.KG){
+switch(units){
+  case WeightUnits.KG: this.weight = weight; break;
+  case WeightUnits.LBS: this.weight = weight / 0.45; break;
+  default: break;
+}
+
+}
+
   public getFullname(){
     return `${this.name} ${this.surname}`
   }
@@ -80,12 +99,20 @@ class Person {
     }
     
   }
+
+  public getWeight(){
+    switch(Person.weightUnits){
+      case WeightUnits.KG: return this.weight;
+      case WeightUnits.LBS: return this.weight / 0.45;
+      default: return this.weight;
+    }
+  }
 }
 
 const people: Person[] = [
-    new Person(' Serbentautas', 'Bordiuras', 23, 189),
-    new Person('varaloja ', 'karkse', 25, 1.7, HeightUnits.METERS),
-    new Person('Suteivis mareivis', 'Kirvokas', 36, 196, HeightUnits.INCHES),
+    new Person(' Serbentautas', 'Bordiuras', 23, 189, 75, WeightUnits.KG, HeightUnits.METERS),
+    new Person('varaloja ', 'karkse', 25, 1.7, 65, WeightUnits.LBS, HeightUnits.METERS),
+    new Person('Suteivis mareivis', 'Kirvokas', 36, 196, 80, WeightUnits.KG, HeightUnits.INCHES),
   ];
 console.group('1. Sukurkite Person klasei savybes "name" ir "surname". Kiekvienai iš jų sukurkite setterius, ir bendrą getterį fullname');
 {
@@ -148,6 +175,18 @@ console.groupEnd();
 console.group('7. Analogiškai pagal [4.]-[6.] punktus sukurkite savybę weight su statiniu išvardinimu "weightUnits", kurio pasirinkimai turi būti: "KG", "LBS"');
 {
 
+console.log('weight units');
+
+const person2: Person = new Person(
+   'SomeName',
+   'Suri',
+   30,
+  170,
+ 80
+);
+console.log('person2', person2);
+console.log('person weight units', Person.weightUnits);
+console.log('person weight', person2.getWeight());
 }
 console.groupEnd();
 
