@@ -132,4 +132,23 @@ console.group('7. Analogiškai pagal [4.]-[6.] punktus sukurkite savybę weight 
 }
 console.groupEnd();
 console.group('8. Sukurkite klasei Person metodą "toString". Kuris paverstų žmogaus savybes gražiu formatu: vardas ir pavardė pirmoje eilutėje, o "height" ir "weight" savybės atskirose eilutėse, atitrauktos nuo kairio krašto per "tab" simbolį, ir su matavimo vienetais(kurie išsaugoti) statinėse Person klasės savybėse');
+class Person1 {
+    name;
+    constructor(name) {
+        this.name = name;
+    }
+    getName() {
+        return this.name;
+    }
+    setName(newName) {
+        if (newName === '') {
+            console.error('Name must not be empty');
+            return;
+        }
+        this.name = newName;
+    }
+}
+const person1 = new Person1('Ponas Serbentas');
+person1.setName('');
+console.log(person1.getName());
 //# sourceMappingURL=main.js.map
