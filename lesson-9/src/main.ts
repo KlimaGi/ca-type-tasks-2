@@ -69,7 +69,20 @@ console.group('1. Sukurkite klasę tėvinę Person vaikinėms klasėms ir išsau
   }
 
   class Student extends Person {
+    private marks: number[];
 
+    public constructor(){
+      super();
+      this.marks = [];
+    }
+
+    public addMark(mark: number): void {
+      if(mark < 1) throw new Error('Pazimys turi buti didesnis nei 1');
+      if(mark > 10) throw new Error('Pazimys turi buti mazesnis nei 10');
+      if(mark % 1 !== 0) throw new Error('Pazimys turi buti sveikas skaicius');
+
+      this.marks.push(mark);
+    }
   }
 
   class Lecturer extends Person {
@@ -86,13 +99,15 @@ console.group('1. Sukurkite klasę tėvinę Person vaikinėms klasėms ir išsau
 
 
 const people: Person[] = [
-  new Person('Markas', 'Byla');
-  new Person('Leja', 'Tyla');
+  new Person('Markas', 'Byla'),
+  new Person('Leja', 'Tyla'),
 ]
 
   // 20min
   console.group('1.1. Sukurkite klasę Person, kurios objektams būtų galima priskirti vardą ir pavardę. Šios klasės objektams turi susigeneruoti id - unikalus raktas. Taip pat sukurkite get"erį fullname, kuris grąžina vardą ir pavardę atskirtus tarpu. Atspausdinkite kelis šios klasės objektus, ir pademonstruokite get"erio veikimą.');
   {
+    console.log('people', people);
+    people.forEach((p) => console.log(p.fullname));
   }
   console.groupEnd();
 

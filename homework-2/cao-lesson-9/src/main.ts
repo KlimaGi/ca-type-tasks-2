@@ -1,255 +1,92 @@
-enum HeightUnits {
-  CENTIMETERS = 'cm',
-  METERS = 'm',
-  INCHES = 'in'
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable max-classes-per-file */
+/* eslint-disable no-console */
+/* eslint-disable no-inner-declarations */
+/* eslint-disable no-lone-blocks */
+
+
+class Vehicle {
+ protected brand: string;
+ protected model: string;
+ protected year: number;
+
+  constructor(brand: string, model: string, year: number){
+  this.brand = brand;
+  this.model = model;
+  this.year = year;
+ }
+
+ protected getString(): string {
+  const {brand, model, year} = this;
+  return `${brand} - ${model} - ${year}`;
+ }
+}
+
+// 1. Sukurkite klasę WaterVehicle, kuri turėtų savybes: brand: string, model: string, year: number, maxDepth: number
+
+class WaterVehicle extends Vehicle {
+  maxDepth: number;
+
+   constructor(brand: string, model: string, year: number, maxDepth: number){
+    super(brand, model, year);
+    this.maxDepth = maxDepth;
+  }
+
+  public override toString = (): string => {
+    return `${this.getString()} maksimalus gylis: ${this.maxDepth}`
+  }
 };
 
-enum WeightUnits {
-  KG = 'kg',
-  LBS = 'lbs'
-}
+// 2. Sukurkite klasę LandVehicle, kuri turėtų savybes: brand: string, model: string, year: number, tires: string[],
 
-const capitalize = (word : string): string => {
-  const words = word.trim().split(' ');
-  const capitalizedWords = words.map(w => w[0].toUpperCase() + w.slice(1));
-  return capitalizedWords.join(' ');
-}
+class LandVehicle extends Vehicle {
+  tires: string[];
 
-class Person {
-  static heightUnits: HeightUnits = HeightUnits.CENTIMETERS;
-  static weightUnits: WeightUnits = WeightUnits.KG;
-
-  private name!: string;
-  private surname!: string;
-  private age!: number;
-  private height!: number;
-  private weight!: number;
-
-  constructor(
-    name: string, 
-    surname: string, 
-    age: number, 
-    height: number,
-    weight: number,
-    weightUnits?: WeightUnits,
-    heightUnits?: HeightUnits,
-    ){
-    this.setName(name);
-    this.setSurname(surname);
-    this.setAge(age);
-    this.setHeight(height, heightUnits);
-    this.setWeight(weight, weightUnits)
+   constructor(brand: string, model: string, year: number, tires: string[]){
+    super(brand, model, year);
+    this.tires = tires;
   }
 
-  public setName(name:string){
-    if(name === '') throw new Error('Negali buti tuscias');
-    if(name.length < 2) throw new Error('Vardas turi buti bent is 2 raidziu');
-    
-    this.name = capitalize(name);
+  public override toString = (): string => {
+    return `${this.getString()} padangos: ${this.tires.join(', ')}`;
+  }
+} 
+
+// 3. Sukurkite klasę AirVehicle, kuri turėtų savybes: brand: string, model: string, year: number, maxAltitude: number,
+
+class AirVehicle extends Vehicle {
+  maxAltitude: number;
+
+   constructor(brand: string, model: string, year: number, maxAltitude: number){
+    super(brand, model, year);
+    this.maxAltitude = maxAltitude;
   }
 
-  public setSurname(surname: string){
-    if(surname === '') throw new Error('Negali buti tuscias');
-    if(surname.length < 2) throw new Error('Pavarde turi buti bent is 2 raidziu');
-
-    this.surname = capitalize(surname);
-  }
-
-  public setAge(age: number){
-    if(age % 1 !== 0) throw new Error('Amzius turi buti sveikas skaicius');
-    if(age < 1 ) throw new Error('Amzius negali buti mazesnis nei 1');
-    if(age > 150 ) throw new Error('Amzius negali buti didesnis uz 150');
-
-    this.age = age;
-  }
-
-  public setHeight(height: number, units: HeightUnits = HeightUnits.CENTIMETERS){
-  switch(units){
-    case HeightUnits.CENTIMETERS: this.height = height; break;
-    case HeightUnits.METERS: this.height = height * 100; break;
-    case HeightUnits.INCHES: this.height = height * 2.54; break;
-    default: break;
-  }
-    
-  }
-
-public setWeight(weight: number, units: WeightUnits = WeightUnits.KG){
-switch(units){
-  case WeightUnits.KG: this.weight = weight; break;
-  case WeightUnits.LBS: this.weight = weight / 0.45; break;
-  default: break;
-}
-
-}
-
-  public getFullname(){
-    return `${this.name} ${this.surname}`
-  }
-
-  public getAge(): number {
-    return this.age;
-  }
-
-  public getHeight(): number{
-    switch(Person.heightUnits){
-      case HeightUnits.CENTIMETERS: return this.height;
-      case HeightUnits.METERS: return this.height / 100;
-      case HeightUnits.INCHES: return this.height / 2.54;
-      default: return this.height;
-    }
-    
-  }
-
-  public getWeight(): number{
-    switch(Person.weightUnits){
-      case WeightUnits.KG: return this.weight;
-      case WeightUnits.LBS: return this.weight / 0.45;
-      default: return this.weight;
-    }
-  }
-
-  public toString(): string {
-  let formattedPerson = `${this.name} ${this.surname}\n`;
-  formattedPerson += `\theight: ${this.getHeight()} ${Person.heightUnits}\n`;
-  formattedPerson += `\tweight: ${this.getWeight()} ${Person.weightUnits}\n`;
-
-  return formattedPerson;
+  public override toString = (): string => {
+    return `${this.getString()} aukstis: ${this.maxAltitude}`
   }
 }
 
-const people: Person[] = [
-    new Person(' Serbentautas', 'Bordiuras', 23, 189, 75, WeightUnits.KG, HeightUnits.METERS),
-    new Person('varaloja ', 'karkse', 25, 1.7, 65, WeightUnits.LBS, HeightUnits.METERS),
-    new Person('Suteivis mareivis', 'Kirvokas', 36, 196, 80, WeightUnits.KG, HeightUnits.INCHES),
-  ];
-console.group('1. Sukurkite Person klasei savybes "name" ir "surname". Kiekvienai iš jų sukurkite setterius, ir bendrą getterį fullname');
-{
-  
-const fullname: string[] = people.map((p) => p.getFullname());
+// * 4. Sukurkite klasę Vehicle ir padarykite ją tėvine [1.], [2.] ir [3.] punktais sukurtoms klasėms. 
+// * 4.1 bendras savybes(brand, model, year) aprašykite su 'protected' pasiekiamumo lygiu. 
+// * 4.2  perrrašykite visų klasių konstruktorius, jog bendros savybės (brand, model, year) būtų perduotos tėviniam konstruktoriui
 
-console.log(fullname);
-}
-console.groupEnd();
 
-console.group('2. Sukurkite Person klasei savybę "age". Inkapsuliuokite šią savybę taip, jog reikšmė galėtų būti tik sveiki skaičiai nuo 1 iki 150');
-{
-const ages = people.map(p => p.getAge());
-console.log('ages', ages);
-}
-console.groupEnd();
+// * 5. Vehicle klasėje aprašykite metodą 'public getString(): string' kuris suformuotų pagindinė informaciją(brand, model, year)
 
-console.group('3. Sukurkite Person klasei savybę "height" kurios vertė būtų saugoma centimetrais. Sukurkite šiai savybei setterį, kuris pirmu parametru priimtų reikšmę, o antru parametru priimtų matavimo vienetus: "cm" | "m" | "in". Jeigu antras parametras nėra perduotas, numatytas(default) matavimo vienetas turi būti cm. Getteris turi grąžinti reikšmę centimetrais.');
-{
-const heights = people.map(p => p.getHeight());
-console.log('heights', heights);
-}
-console.groupEnd();
+const landVehicle1 = new LandVehicle('minerva', 'ccc', 2019, ['Delux 200 m&s', 'Delux 200 m&s', 'Delux 200 m&s','Delux 200 m&s']);
+console.log('landVehicle1', landVehicle1);
 
-console.group('4. Sukurkite Person klasei statinę savybę "heightUnits". Jos tipas turi būti išvardinimas(enum), kurio pasirinkimai yra: "cm", "m", "in". Numatytoji(default) "heightUnits" reikšmė turi būti centimetrai');
-{
-  console.log('Matavimo vienetai pakeisti i:');
-  console.dir(Person.heightUnits);
-  Person.heightUnits = HeightUnits.METERS;
-  console.dir(Person.heightUnits);
-  Person.heightUnits = HeightUnits.INCHES;
-  console.dir(Person.heightUnits);
-  Person.heightUnits = HeightUnits.CENTIMETERS;
-  console.dir(Person.heightUnits);
-}
-console.groupEnd();
+// * 6. Vehicle klasėje pakeiskite metodą 'public getString(): string' į 'PROTECTED getString(): string'. 
+// * Kiekvienoje paveldinčioje klasėje sukurkite metodus 'public toString(): string', kurios naudotų tėvinės klasės metodus metodą 'PROTECTED getString(): string' tam kad suformuoti pilną savosios klasės reprezentaciją
 
-console.group('5. "height" setterio antram parametrui pakeiskite sąjungos tipą į [4.] užduotyje sukurtą išvardinimą(enum). Priderinkite pavyzdžius ir metodą.');
+const airVehicle1 = new AirVehicle('air-minerva', 'fly', 2021, 2);
+console.log('airVehicle1', airVehicle1);
 
-console.group('6. "height" geteriui sukurkite logiką, jog jis grąžintų matavimo vienetus, pagal statinės savybės "heightUnits" reikšmę.');
-{
+const waterVehicle1 = new WaterVehicle('water-minerva', 'weee', 2018, 2);
+console.log('waterVehicle1', waterVehicle1);
 
-Person.heightUnits = HeightUnits.METERS;
-const heightsInMeters = people.map(p => p.getHeight());
-console.log('Matavimo vienetai pakeisti i: ', HeightUnits.METERS);
-console.log(heightsInMeters);
+// 7. Tėvinės klasės Vehicle konstruktoriaus parametrus aprašykite objektu, ir perrašykite vaikinių klasių konstruktorius.
 
-Person.heightUnits = HeightUnits.INCHES;
-const heightsInInches = people.map(p => p.getHeight());
-console.log('Matavimo vienatai pakeisti i: ', HeightUnits.INCHES);
-console.log(heightsInInches);
+// 8. Išskaidykite kodą atskirais failais
 
-Person.heightUnits = HeightUnits.CENTIMETERS;
-const heightInCentimeters = people.map(p => p.getHeight());
-console.log('Matavimo vienetai pakeisti i: ', HeightUnits.CENTIMETERS);
-console.log(heightInCentimeters);
-}
-console.groupEnd();
-
-console.group('7. Analogiškai pagal [4.]-[6.] punktus sukurkite savybę weight su statiniu išvardinimu "weightUnits", kurio pasirinkimai turi būti: "KG", "LBS"');
-{
-
-console.log('weight units');
-
-const person2: Person = new Person(
-   'SomeName',
-   'Suri',
-   30,
-  170,
- 80
-);
-console.log('person2', person2);
-console.log('person weight units', Person.weightUnits);
-console.log('person weight', person2.getWeight());
-}
-console.groupEnd();
-
-console.group('8. Sukurkite klasei Person metodą "toString". Kuris paverstų žmogaus savybes gražiu formatu: vardas ir pavardė pirmoje eilutėje, o "height" ir "weight" savybės atskirose eilutėse, atitrauktos nuo kairio krašto per "tab" simbolį, ir su matavimo vienetais(kurie išsaugoti) statinėse Person klasės savybėse');
-
-{
-const person3: Person = new Person(
-  'SomeName',
-  'Suri',
-  30,
-  170,
-  80
-);
-
-const person4: Person = new Person(
-  'Same',
-  'Sour',
-  37,
-  160,
-  50
-);
-
-Person.heightUnits = HeightUnits.METERS;
-Person.weightUnits = WeightUnits.KG;
-console.log('person3', person3.toString());
-console.log('person4', person4.toString());
-
-Person.heightUnits = HeightUnits.INCHES;
-Person.weightUnits = WeightUnits.LBS;
-console.log('person3', person3.toString());
-console.log('person4', person4.toString());
-}
-
-class Person1 {
-  private name: string;
-
-  constructor(name: string){
-    this.name = name;
-  }
-
-  getName(): string{
-    return this.name;
-  }
-
-  setName(newName: string): void {
-    if(newName === ''){
-      console.error('Name must not be empty');
-      return;
-    }
-    // kiti veiksmai
-    this.name = newName;
-  }
-}
-
-const person1 = new Person1('Ponas Serbentas');
-
-person1.setName(''); // vardo nustatymas nepavyks
-console.log(person1.getName());
