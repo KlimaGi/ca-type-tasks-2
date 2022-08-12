@@ -1,3 +1,7 @@
+/* eslint-disable no-console */
+/* eslint-disable no-lone-blocks */
+/* eslint-disable no-inner-declarations */
+
 // tipu formavimas ir susaistymas
 
 type User = {
@@ -118,19 +122,19 @@ interface SomeUser{
   phone?: string;
 }
 
+const merge = (user: SomeUser, overrides:SomeUserOptionals): SomeUser => {
+    return {
+      ...user,
+      ...overrides
+    }
+  };
 
-const merge = (user: SomeUser, overrides:SomeUserOptionals): SomeUser => 
-return {
-  ...user,
-  ...overrides
-};
-
-console.log('merge', merge(
-  { name: 'Jack',
+console.log('merge', merge({
+  name: 'Jack',
   id: 'foo',
   email: 'some@some.com',
   },{
-  email: 'somebazz@some.com'
+  email: 'somebazz@some.com',
   }));
 
 type SomeUserOptionals = Partial<SomeUser>;
