@@ -5,11 +5,12 @@ const merge = (user, overrides) => {
         ...overrides
     };
 };
-console.log('merge', merge({ name: 'Jack',
+console.log('merge', merge({
+    name: 'Jack',
     id: 'foo',
     email: 'some@some.com',
 }, {
-    email: 'somebazz@some.com'
+    email: 'somebazz@some.com',
 }));
 const people = [
     {
@@ -88,32 +89,79 @@ console.groupCollapsed('2. Sukurkite funkciją, kuri paverčia žmogaus objektą
     console.table(result);
 }
 console.groupEnd();
-console.groupCollapsed('3. Atspausdinkite objektus su visų žmonių vardais, pavardėm bei santuokos statusais');
+console.group('3. Atspausdinkite objektus su visų žmonių vardais, pavardėm bei santuokos statusais');
 {
+    const selectTaskProps = ({ name, surname, married }) => ({
+        name, surname, married
+    });
+    const result = people.map(selectTaskProps);
+    console.log('people', people);
+    console.log('result', result);
 }
 console.groupEnd();
-console.groupCollapsed('4. Sukurtite masyvą su lytimis ir uždirbamu pinigų kiekiu, pagal pradinį žmonių masyvą');
+console.group('4. Sukurtite masyvą su lytimis ir uždirbamu pinigų kiekiu, pagal pradinį žmonių masyvą');
 {
+    const selectSexIncome = ({ sex, income }) => ({
+        sex, income,
+    });
+    const result = people.map(selectSexIncome);
+    console.log('people', people);
+    console.log('result', result);
 }
 console.groupEnd();
-console.groupCollapsed('5. Sukurtite masyvą su vardais, pavardėmis ir lytimi, pagal pradinį žmonių masyvą');
+console.group('5. Sukurtite masyvą su vardais, pavardėmis ir lytimi, pagal pradinį žmonių masyvą');
 {
+    const selectNamesSurnamesSex = ({ name, surname, sex }) => ({
+        name, surname, sex
+    });
+    const result = people.map(selectNamesSurnamesSex);
+    console.log('people', people);
+    console.log('result', result);
 }
 console.groupEnd();
-console.groupCollapsed('6. Atspausdinkite visus vyrus');
+console.group('6. Atspausdinkite visus vyrus');
 {
+    const isMale = ({ sex }) => sex === 'male';
+    const males = people.filter(isMale);
+    console.log('people', people);
+    console.log('males', males);
 }
 console.groupEnd();
-console.groupCollapsed('7. Atspausdinkite visas moteris');
+console.group('7. Atspausdinkite visas moteris');
 {
+    const isFemale = ({ sex }) => sex === 'female';
+    const males = people.filter(isFemale);
+    console.log('people', people);
+    console.log('males', males);
 }
 console.groupEnd();
-console.groupCollapsed('8. Atspausdinkite žmonių vardus ir pavardes, kurie turi mašinas');
+console.group('8. Atspausdinkite žmonių vardus ir pavardes, kurie turi mašinas');
 {
+    const personHasCar = ({ hasCar }) => Boolean(hasCar);
+    const createIdentity = ({ name, surname }) => ({ name, surname });
+    const identityReducer = (result, { hasCar, name, surname }) => {
+        if (hasCar)
+            result.push({ name, surname });
+        return result;
+    };
+    const peopleWithCars = people.filter(personHasCar);
+    const indentities = peopleWithCars.map(createIdentity);
+    const identities2 = people.reduce(identityReducer, []);
+    console.log('people', people);
+    console.log('indentities', indentities);
+    console.log('identitiess2', identities2);
 }
 console.groupEnd();
-console.groupCollapsed('9. Atspausdinkite žmones kurie yra susituokę');
+console.group('9. Atspausdinkite žmones kurie yra susituokę');
 {
+    const marriedReducer = (result, person) => {
+        if (person.married)
+            result.push(person);
+        return result;
+    };
+    const marriedPeople = people.reduce(marriedReducer, []);
+    console.log('people', people);
+    console.log('marriedPeople', marriedPeople);
 }
 console.groupEnd();
 console.groupCollapsed('10. Sukurkite objektą, kuriame būtų apskaičiuotas vairuojančių žmonių kiekis pagal lytį');
