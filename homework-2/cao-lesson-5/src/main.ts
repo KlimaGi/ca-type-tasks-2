@@ -406,7 +406,7 @@ console.groupEnd();
 
 console.groupCollapsed('12. Suformuokite žmonių masyvą, kuriame nebūtų lyties, vardo ir pavardės');
 {
-  // ...sprendimas ir spausdinimas
+   
 }
 console.groupEnd();
 
