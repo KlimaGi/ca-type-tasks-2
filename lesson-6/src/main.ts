@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-inner-declarations */
 /* eslint-disable no-lone-blocks */
- 
+
 /*
   Užduočių atlikimo eiga:
   * Pirmiausiai perskaitykite visą užduotį:
@@ -38,129 +38,90 @@
     * Užduočių rezultatų pateikimas tike pat svarbus, kiek sprendimas.
 */
 
-// 75min
-console.group('1. Naudojant "getter" ir "setter" NESUTRUMPINTAS funkcijas:');
+// 10 min
+console.group('1. Sukurkite funkciją "joinArrays", kuri apjungia 2 masyvus. Grąžinamo masyvo tipas turi būti lygus parametrais perduotų masyvų tipų sajungai');
 {
-  class Person { }
+  const joinArrays = <T, K>(arr1: T[], arr2: K[]): (T | K)[] => [...arr1, ...arr2];
 
-  const person = new Person();
-
-  // 15min
-  console.groupCollapsed(`1.1. Sukurkite klasę Person, kuri turėtų privačias savybes:
-      name: string,
-      surname: string,
-      items: Array<{title: string, price: number}>,
-      age: number,
-    Aprašykite konstruktorių kuris priimtų šiom savybėms skirtus parametrus ir nustatytų reikšmes naudojant "setter" funkcijas.
-  `);
-  {
-  }
-  console.groupEnd();
-
-  // 5min
-  console.groupCollapsed('1.2. Aprašykite kiekvienai savybei "getter" funkcijas');
-  {
-  }
-  console.groupEnd();
-
-  // 5min
-  console.groupCollapsed('1.3. Sukurkite papildomą getterį "getFullname", kuris grąžintų pilną žmogaus vardą.');
-  {
-  }
-  console.groupEnd();
-
-  // 10min
-  console.groupCollapsed('1.4. Sukurkite papildomą getterį "getTotalItemValue", kuris grąžintų visų asmens daiktų kainų sumą');
-  {
-  }
-  console.groupEnd();
-
-  // 15min
-  console.groupCollapsed('1.5. setName "setter"yje aprašykite 3 savo sugalvotas validacijas');
-  {
-  }
-  console.groupEnd();
-
-  // 5min
-  console.groupCollapsed('1.6. setSurname "setter"yje aprašykite 3 savo sugalvotas validacijas');
-  {
-  }
-  console.groupEnd();
-
-  // 15min
-  console.groupCollapsed('1.7. setAge "setter"yje aprašykite 2 savo sugalvotas validacijas');
-  {
-  }
-  console.groupEnd();
-
-  // 20min
-  console.groupCollapsed('1.8. setItems "setter"yje aprašykite 3 savo sugalvotas validacijas KIEKVIENO priskiriamo masyvo "daiktams"');
-  {
-  }
-  console.groupEnd();
+  console.log('joinArrays([1, 2, 3], [4, 5, 6])', joinArrays([1, 2, 3], [4, 5, 6]));
+  console.log('joinArrays([1, 2, 3], ["a","b"])', joinArrays([1, 2, 3], ['a','b']));
 }
 console.groupEnd();
 
-// PASIKOPIJUOKITE VISĄ PIRMĄ UŽDUOTĮ IR PAKEISTIKTE KODĄ NAUDOJANT NAUJĄ "get" ir "set" SINTAKSĘ
-// 55min
-console.group('2. Naudojant "get" ir "set" ES6 funkcijas:');
+// 25 min
+console.group('2. Sukurkite funkciją "joinObjects", kuri apjungia 2 objektus. Apjungtam objekto tipe, turi būti visos savybės kurios buvo objekte pirmu parametru, ir objekte antru parametru.');
+/*
+  hints:
+    * TS: generic constraints
+    * JS: spread operator
+*/
 {
-  class Person { }
+  type CommonProperties<T extends object, K extends Object> = keyof (T | K);
 
-  const person = new Person();
+  type Merge<T extends object, K extends Object> = Omit<T, CommonProperties<T, K>> & K;
+}
+console.groupEnd();
 
-  // 10min
-  console.groupCollapsed(`2.1. Sukurkite klasę Person, kuri turėtų privačias savybes:
-      name: string,
-      surname: string,
-      items: Array<{title: string, price: number}>,
-      age: number,
-    Aprašykite konstruktorių kuris priimtų šiom savybėms skirtus parametrus ir nustatytų reikšmes naudojant "setter" funkcijas.
-  `);
-  {
-  }
-  console.groupEnd();
+// 30 min
+console.group('3. Sukurkite funkciją "applyFilters", kuri priima masyvą elementų, ir masyvą filtravimo funkcijų. Panaudokite visas filtravimo funkcijas masyvo elementams filtruoti.');
+/*
+  hints:
+    * JS: Array.prototype.filter
+    * JS: Array.prototype.reduce
+*/
+{
+}
+console.groupEnd();
 
-  // 5min
-  console.groupCollapsed('2.2. Aprašykite kiekvienai savybei ES6 "get" funkcijas');
-  {
-  }
-  console.groupEnd();
+// 40 min
+console.group('4. Sukurkite funkciją "applySortings", kuri priima masyvą elementų, ir masyvą rikiavimo funkcijų. Panaudokite visas rikiavimo funkcijas masyvo elementams rikiuoti.');
+/*
+  Kartais norime išrikiuoti masyvą pagal kelis kriterijus:
+    Rikiuojame žmones pagal miestus,
+    o pagal miestus išrikiuotus žmones išrikiuojame pagal amžių, nekeičiant rikiavimo pagal miestus,
+    o tuomet pagal pavardę, nekeičiant prieš tai buvusių rikiavimų
+    Kitaip tariant rikiuojame:
+      1. Pagal Miestą, o iš to paties miesto rikiuojame:
+        2. Pagal amžių, o iš to paties miesto ir to paties amžiaus rikiuojame:
+          3. Pagal pavardę
+  Pavyzdžiui:
+  Miestas 1↑ | Pavardė 3↑ | Amžius 2↑
+  ------------------------------------
+  Kaunas     | Žinlinskas | 16
+  Kaunas     | Mažuronis  | 19
+  Kaunas     | Britkus    | 28
+  Kaunas     | Malūnas    | 32
+  Kaunas     | Princas    | 32
+  Kaunas     | Žiobaras   | 32
+  Kaunas     | Griovys    | 47
+  Rietavas   | Žinduolis  | 29
+  Rietavas   | Varkienė   | 63
+  Vilnius    | Bandziūga  | 17
+  Vilnius    | Fosforas   | 22
+  Vilnius    | Hienytė    | 22
+  Vilnius    | Amadėjus   | 23
+  Vilnius    | Klinkaitė  | 32
+  Parašykite tokį BENDRINĮ algoritmą, kuris priimtų parametrus
+    * duomenų masyvą
+    * rikiavimo funkcijų masyvą
+  Ir išrikiuotų masyvą pritaikant visų rikiavimo funkcijų kriterijus,
+    pagal funkcijų masyve esančių rikiavimo funkcijų eiliškumą
+  hints:
+    * JS: Array.prototype.sort
+    * JS: spread operator
+    * Programming: Sorting function | Sorting function return type
+    * Programming: Return Early Pattern
+*/
+{
+}
+console.groupEnd();
 
-  // 5min
-  console.groupCollapsed('2.3. Sukurkite papildomą getterį "fullname", kuris grąžintų pilną žmogaus vardą.');
-  {
-  }
-  console.groupEnd();
-
-  // 5min
-  console.groupCollapsed('2.4. Sukurkite papildomą getterį "totalItemValue", kuris grąžintų visų asmens daiktų kainų sumą');
-  {
-  }
-  console.groupEnd();
-
-  // 5min
-  console.groupCollapsed('2.5. name "setter"yje aprašykite 3 savo sugalvotas validacijas');
-  {
-  }
-  console.groupEnd();
-
-  // 5min
-  console.groupCollapsed('2.6. surname "setter"yje aprašykite 3 savo sugalvotas validacijas');
-  {
-  }
-  console.groupEnd();
-
-  // 10min
-  console.groupCollapsed('2.7. age "setter"yje aprašykite 2 savo sugalvotas validacijas');
-  {
-  }
-  console.groupEnd();
-
-  // 10min
-  console.groupCollapsed('2.8. items "setter"yje aprašykite 3 savo sugalvotas validacijas KIEKVIENO priskiriamo masyvo "daiktams"');
-  {
-  }
-  console.groupEnd();
+// 50 min
+console.group('5. Sukurkite funkciją "groupBy", kuri priima masyvą objektų, ir obejkto savybės pavadinimą. Funkcija turi sugrupuoti masyvo elementus, pagal savybės pavadinimo reikšmes');
+/*
+  hints:
+    * JS: Array.prototype.reduce
+*/
+{
 }
 console.groupEnd();
