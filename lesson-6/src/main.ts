@@ -69,7 +69,38 @@ console.group('3. Sukurkite funkciją "applyFilters", kuri priima masyvą elemen
     * JS: Array.prototype.filter
     * JS: Array.prototype.reduce
 */
+
 {
+  type NumericFilterFunction = (x: number)=> boolean;
+
+const applyFilters = (
+  arr: number[],
+   filterFns: NumericFilterFunction[],): 
+   number[] => filterFns.reduce((filteredArr, filterFn) => filteredArr.filter(filterFn), arr);
+
+
+const isEqual = (x: number) => x % 2 === 0;
+const isPositive = (x: number) => x > 0;
+const isInteger = (x: number) => x % 1 === 0;
+
+const numbers = [1, 2, 3, 4, 5, 6, 6.34, -7];
+
+const filteredArr = applyFilters(numbers, [isEqual, isPositive, isInteger]);
+console.log('filteredArr',filteredArr);
+// --------
+const applyFilters2 = (
+  arr: string[],
+  filterFns: ((x: string) => boolean)[],
+  ): string[] => filterFns.reduce((prevArr, filterFn) => prevArr.filter(filterFn), arr);
+
+  const isLongerThen2Symbols = (x: string) => x.length > 2;
+  const isShorterThen8Symbols = (x: string) => x.length < 8;
+
+  const words = ['a', 'ab', 'abc', 'abcd', 'abcde', 'abcdefghi'];
+
+  const filteredWords = applyFilters2(words, [isLongerThen2Symbols, isShorterThen8Symbols]);
+
+console.log('filteredWords', filteredWords);
 }
 console.groupEnd();
 
