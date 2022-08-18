@@ -19,16 +19,54 @@ console.group('3. Sukurkite funkciją "applyFilters", kuri priima masyvą elemen
     const numbers = [1, 2, 3, 4, 5, 6, 6.34, -7];
     const filteredArr = applyFilters(numbers, [isEqual, isPositive, isInteger]);
     console.log('filteredArr', filteredArr);
-    const applyFilters2 = (arr, filterFns) => filterFns.reduce((prevArr, filterFn) => prevArr.filter(filterFn), arr);
     const isLongerThen2Symbols = (x) => x.length > 2;
     const isShorterThen8Symbols = (x) => x.length < 8;
     const words = ['a', 'ab', 'abc', 'abcd', 'abcde', 'abcdefghi'];
-    const filteredWords = applyFilters2(words, [isLongerThen2Symbols, isShorterThen8Symbols]);
+    const filteredWords = applyFilters(words, [isLongerThen2Symbols, isShorterThen8Symbols]);
     console.log('filteredWords', filteredWords);
 }
 console.groupEnd();
 console.group('4. Sukurkite funkciją "applySortings", kuri priima masyvą elementų, ir masyvą rikiavimo funkcijų. Panaudokite visas rikiavimo funkcijas masyvo elementams rikiuoti.');
 {
+    const people = [
+        { city: 'Vilnius', surname: 'Bandziūga', age: 17 },
+        { city: 'Kaunas', surname: 'Britkus', age: 28 },
+        { city: 'Kaunas', surname: 'Žinlinskas', age: 16 },
+        { city: 'Rietavas', surname: 'Varkienė', age: 63 },
+        { city: 'Vilnius', surname: 'Hienytė', age: 22 },
+        { city: 'Kaunas', surname: 'Malūnas', age: 32 },
+        { city: 'Kaunas', surname: 'Žiobaras', age: 32 },
+        { city: 'Vilnius', surname: 'Fosforas', age: 22 },
+        { city: 'Kaunas', surname: 'Mažuronis', age: 19 },
+        { city: 'Kaunas', surname: 'Princas', age: 32 },
+        { city: 'Vilnius', surname: 'Klinkaitė', age: 32 },
+        { city: 'Kaunas', surname: 'Griovys', age: 47 },
+        { city: 'Rietavas', surname: 'Žinduolis', age: 29 },
+        { city: 'Vilnius', surname: 'Amadėjus', age: 23 },
+    ];
+    const compareByAgeASC = (p1, p2) => p1.age - p2.age;
+    const compareByCityASC = (p1, p2) => p1.city.localeCompare(p2.city);
+    const compareBySurnameASC = (p1, p2) => p1.surname.localeCompare(p2.surname);
+    const applySortings = (people, compareFunctions) => {
+        const sortedPeople = [...people];
+        sortedPeople.sort((p1, p2) => {
+            for (let i = 0; i < compareFunctions.length; i += 1) {
+                const compareFunction = compareFunctions[i];
+                const comparisonResult = compareFunction(p1, p2);
+                if (comparisonResult !== 0) {
+                    return comparisonResult;
+                }
+            }
+            return 0;
+        });
+        return sortedPeople;
+    };
+    const sortedPeople = applySortings(people, [
+        compareByCityASC,
+        compareByAgeASC,
+        compareBySurnameASC
+    ]);
+    console.log('sortedPeople', sortedPeople);
 }
 console.groupEnd();
 console.group('5. Sukurkite funkciją "groupBy", kuri priima masyvą objektų, ir obejkto savybės pavadinimą. Funkcija turi sugrupuoti masyvo elementus, pagal savybės pavadinimo reikšmes');

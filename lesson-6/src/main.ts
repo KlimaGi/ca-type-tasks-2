@@ -71,12 +71,11 @@ console.group('3. Sukurkite funkciją "applyFilters", kuri priima masyvą elemen
 */
 
 {
-  type NumericFilterFunction = (x: number)=> boolean;
-
-const applyFilters = (
-  arr: number[],
-   filterFns: NumericFilterFunction[],): 
-   number[] => filterFns.reduce((filteredArr, filterFn) => filteredArr.filter(filterFn), arr);
+  
+const applyFilters = <Element, FilterFn extends (x: Element) => boolean>(
+  arr: Element[],
+  filterFns: FilterFn[],): 
+  Element[] => filterFns.reduce((filteredArr, filterFn) => filteredArr.filter(filterFn), arr);
 
 
 const isEqual = (x: number) => x % 2 === 0;
@@ -88,17 +87,13 @@ const numbers = [1, 2, 3, 4, 5, 6, 6.34, -7];
 const filteredArr = applyFilters(numbers, [isEqual, isPositive, isInteger]);
 console.log('filteredArr',filteredArr);
 // --------
-const applyFilters2 = (
-  arr: string[],
-  filterFns: ((x: string) => boolean)[],
-  ): string[] => filterFns.reduce((prevArr, filterFn) => prevArr.filter(filterFn), arr);
 
   const isLongerThen2Symbols = (x: string) => x.length > 2;
   const isShorterThen8Symbols = (x: string) => x.length < 8;
 
   const words = ['a', 'ab', 'abc', 'abcd', 'abcde', 'abcdefghi'];
 
-  const filteredWords = applyFilters2(words, [isLongerThen2Symbols, isShorterThen8Symbols]);
+  const filteredWords = applyFilters(words, [isLongerThen2Symbols, isShorterThen8Symbols]);
 
 console.log('filteredWords', filteredWords);
 }
@@ -144,6 +139,64 @@ console.group('4. Sukurkite funkciją "applySortings", kuri priima masyvą eleme
     * Programming: Return Early Pattern
 */
 {
+  const people: Person[] = [
+    { city: 'Vilnius', surname: 'Bandziūga', age: 17 },
+    { city: 'Kaunas', surname: 'Britkus', age: 28 },
+    { city: 'Kaunas', surname: 'Žinlinskas', age: 16 },
+    { city: 'Rietavas', surname: 'Varkienė', age: 63 },
+    { city: 'Vilnius', surname: 'Hienytė', age: 22 },
+    { city: 'Kaunas', surname: 'Malūnas', age: 32 },
+    { city: 'Kaunas', surname: 'Žiobaras', age: 32 },
+    { city: 'Vilnius', surname: 'Fosforas', age: 22 },
+    { city: 'Kaunas', surname: 'Mažuronis', age: 19 },
+    { city: 'Kaunas', surname: 'Princas', age: 32 },
+    { city: 'Vilnius', surname: 'Klinkaitė', age: 32 },
+    { city: 'Kaunas', surname: 'Griovys', age: 47 },
+    { city: 'Rietavas', surname: 'Žinduolis', age: 29 },
+    { city: 'Vilnius', surname: 'Amadėjus', age: 23 },
+  ];
+
+interface Person {
+  city: string,
+  surname: string,
+  age: number
+}
+
+type CompareFunction<Type> = (p1: Type, p2: Type) => number;
+
+  const compareByAgeASC: CompareFunction<Person> = (p1, p2) => p1.age - p2.age;
+
+  const compareByCityASC: CompareFunction<Person> = (p1, p2) => p1.city.localeCompare(p2.city);
+
+  const compareBySurnameASC: CompareFunction<Person> = (p1, p2) => p1.surname.localeCompare(p2.surname);
+
+  const applySortings = <Element, Compare extends CompareFunction<Element>> (
+    people: Element[], 
+    compareFunctions: Compare[]
+    ): Element[] => {
+    const sortedPeople: Element[] = [...people];
+    
+    sortedPeople.sort((p1, p2) => {
+      for(let i = 0; i < compareFunctions.length; i += 1){
+        const compareFunction = compareFunctions[i];
+        const comparisonResult = compareFunction(p1, p2);
+        if(comparisonResult !== 0){
+          return comparisonResult;
+        }
+      }
+      return 0;
+    })
+
+    return sortedPeople;
+  }
+
+  const sortedPeople = applySortings(people, [
+    compareByCityASC, 
+    compareByAgeASC, 
+    compareBySurnameASC
+  ]);
+
+  console.log('sortedPeople', sortedPeople);
 }
 console.groupEnd();
 
