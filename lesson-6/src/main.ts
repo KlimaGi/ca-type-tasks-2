@@ -206,6 +206,65 @@ console.group('5. Sukurkite funkciją "groupBy", kuri priima masyvą objektų, i
   hints:
     * JS: Array.prototype.reduce
 */
+// sukurti funkcija kuri priima konkrecius parametrus
+// sugrupuoti elementus pagal konkrecia savybe
+// sugrupuoti elementus pagal dinamine savybe
+// perrasyti funkcija kuri priima dinaminius parametrus
 {
+
+ 
+type GroupedObject<
+  ObjectType extends {[x in string]: any}, 
+  key extends keyof ObjectType
+  > = { [Key in ObjectType[key]]: ObjectType[] }
+
+  interface Person {
+    city: string;
+    surname: string;
+    age: number;
+  };
+
+  const groupBy = (arr: Person[], 
+    key: keyof Person,
+    ): GroupedObject<Person, keyof Person> => arr.reduce<any>(
+    (prevGroupedObject, person) => {
+
+      const groupName = person[key];
+      if(groupName in prevGroupedObject){
+        prevGroupedObject[groupName].push(person);
+      }else{
+        prevGroupedObject[groupName] = [person];
+      }
+      return prevGroupedObject;
+    }, 
+    {},
+  );
+
+  
+
+
+  const people: Person[] = [
+    { city: 'Vilnius', surname: 'Bandziūga', age: 17 },
+    { city: 'Kaunas', surname: 'Britkus', age: 28 },
+    { city: 'Kaunas', surname: 'Žinlinskas', age: 16 },
+    { city: 'Rietavas', surname: 'Varkienė', age: 63 },
+    { city: 'Vilnius', surname: 'Hienytė', age: 22 },
+    { city: 'Kaunas', surname: 'Malūnas', age: 32 },
+    { city: 'Kaunas', surname: 'Žiobaras', age: 32 },
+    { city: 'Vilnius', surname: 'Fosforas', age: 22 },
+    { city: 'Kaunas', surname: 'Mažuronis', age: 19 },
+    { city: 'Kaunas', surname: 'Princas', age: 32 },
+    { city: 'Vilnius', surname: 'Klinkaitė', age: 32 },
+    { city: 'Kaunas', surname: 'Griovys', age: 47 },
+    { city: 'Rietavas', surname: 'Žinduolis', age: 29 },
+    { city: 'Vilnius', surname: 'Amadėjus', age: 23 },
+  ];
+
+const groupedPeople = groupBy(people, 'age');
+const groupedPeople2 = groupBy(people, 'city');
+
+console.log('groupedPeople', groupedPeople);
+console.log('groupedPeople2', groupedPeople2);
+
 }
 console.groupEnd();

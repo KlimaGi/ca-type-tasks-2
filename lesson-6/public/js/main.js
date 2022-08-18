@@ -71,6 +71,37 @@ console.group('4. Sukurkite funkciją "applySortings", kuri priima masyvą eleme
 console.groupEnd();
 console.group('5. Sukurkite funkciją "groupBy", kuri priima masyvą objektų, ir obejkto savybės pavadinimą. Funkcija turi sugrupuoti masyvo elementus, pagal savybės pavadinimo reikšmes');
 {
+    ;
+    const groupBy = (arr, key) => arr.reduce((prevGroupedObject, person) => {
+        const groupName = person[key];
+        if (groupName in prevGroupedObject) {
+            prevGroupedObject[groupName].push(person);
+        }
+        else {
+            prevGroupedObject[groupName] = [person];
+        }
+        return prevGroupedObject;
+    }, {});
+    const people = [
+        { city: 'Vilnius', surname: 'Bandziūga', age: 17 },
+        { city: 'Kaunas', surname: 'Britkus', age: 28 },
+        { city: 'Kaunas', surname: 'Žinlinskas', age: 16 },
+        { city: 'Rietavas', surname: 'Varkienė', age: 63 },
+        { city: 'Vilnius', surname: 'Hienytė', age: 22 },
+        { city: 'Kaunas', surname: 'Malūnas', age: 32 },
+        { city: 'Kaunas', surname: 'Žiobaras', age: 32 },
+        { city: 'Vilnius', surname: 'Fosforas', age: 22 },
+        { city: 'Kaunas', surname: 'Mažuronis', age: 19 },
+        { city: 'Kaunas', surname: 'Princas', age: 32 },
+        { city: 'Vilnius', surname: 'Klinkaitė', age: 32 },
+        { city: 'Kaunas', surname: 'Griovys', age: 47 },
+        { city: 'Rietavas', surname: 'Žinduolis', age: 29 },
+        { city: 'Vilnius', surname: 'Amadėjus', age: 23 },
+    ];
+    const groupedPeople = groupBy(people, 'age');
+    const groupedPeople2 = groupBy(people, 'city');
+    console.log('groupedPeople', groupedPeople);
+    console.log('groupedPeople2', groupedPeople2);
 }
 console.groupEnd();
 //# sourceMappingURL=main.js.map
