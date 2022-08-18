@@ -2,7 +2,7 @@
 const merge = (user, overrides) => {
     return {
         ...user,
-        ...overrides
+        ...overrides,
     };
 };
 console.log('merge', merge({
@@ -12,6 +12,24 @@ console.log('merge', merge({
 }, {
     email: 'somebazz@some.com',
 }));
+const mapById = (users) => {
+    return users.reduce((acc, curr) => {
+        const { id, ...other } = curr;
+        return {
+            ...acc,
+            [id]: other,
+        };
+    }, {});
+};
+console.log('mapById', mapById([
+    {
+        id: 'foo',
+        name: 'Mr. Foo',
+    }, {
+        id: 'baz',
+        name: 'Mrs. Baz',
+    },
+]));
 const people = [
     {
         name: 'Jonas',
@@ -92,7 +110,7 @@ console.groupEnd();
 console.group('3. Atspausdinkite objektus su visų žmonių vardais, pavardėm bei santuokos statusais');
 {
     const selectTaskProps = ({ name, surname, married }) => ({
-        name, surname, married
+        name, surname, married,
     });
     const result = people.map(selectTaskProps);
     console.log('people', people);

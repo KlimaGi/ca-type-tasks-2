@@ -123,26 +123,46 @@ interface SomeUser{
   phone?: string;
 }
 
-const merge = (user: SomeUser, overrides:SomeUserOptionals): SomeUser => {
-    return {
-      ...user,
-      ...overrides
-    }
+const merge = (user: SomeUser, overrides: SomeUserOptionals): SomeUser => {
+  return {
+    ...user,
+    ...overrides,
   };
+};
 
 console.log('merge', merge({
   name: 'Jack',
   id: 'foo',
   email: 'some@some.com',
-  },{
+}, {
   email: 'somebazz@some.com',
-  }));
+}));
 
 type SomeUserOptionals = Partial<SomeUser>;
 type RequiredSomeUser = Required<SomeUser>;
 type JustEmailAndName = Pick<SomeUser, 'email' | 'name'>;
+type UserWithoutID = Omit<SomeUser, 'id'>;
 
+// record
+const mapById = (users: SomeUser[]): Record<SomeUser['id'], UserWithoutID> => {
+  return users.reduce((acc, curr) => {
+    const { id, ...other } = curr;
+    return {
+      ...acc,
+      [id]: other,
+    };
+  }, {});
+};
 
+console.log('mapById', mapById([
+  {
+    id: 'foo',
+    name: 'Mr. Foo',
+  }, {
+    id: 'baz',
+    name: 'Mrs. Baz',
+  },
+]));
 
 // ---------------
 
@@ -221,9 +241,7 @@ const people: Person[] = [
     * (jeigu reikia aprašome naujus kintamuosius reikalingus sprendimui)
     * Atliekame užduoties sprendimą
     * Spausdiname sprendimo rezultatus
-  
   Visas funkcijas ir kintamuosius reikia aprašyti tipais (net jei to ir nereikalauja TS compiler'is)
-    
 */
 console.groupCollapsed('1. Sukurkite funkciją, kuri paverčia žmogaus objektą -> {name: string, surname: string} objektu. Naudojant šią funkciją performuokite visą žmonių masyvą');
 {
@@ -270,13 +288,13 @@ console.groupEnd();
 console.group('3. Atspausdinkite objektus su visų žmonių vardais, pavardėm bei santuokos statusais');
 {
   type TaskProps = {
-    name: Person["name"],
-    surname: Person["surname"],
+    name: Person['name'],
+    surname: Person['surname'],
     married: Person['married'],
   }
 
-  const selectTaskProps = ({name, surname, married}: Person): TaskProps => ({
-    name, surname, married
+  const selectTaskProps = ({ name, surname, married }: Person): TaskProps => ({
+    name, surname, married,
   });
   const result: TaskProps[] = people.map(selectTaskProps);
 
@@ -288,8 +306,8 @@ console.groupEnd();
 console.group('4. Sukurtite masyvą su lytimis ir uždirbamu pinigų kiekiu, pagal pradinį žmonių masyvą');
 {
   type TaskProps = {
-    sex: Person["sex"],
-    income: Person["income"],
+    sex: Person['sex'],
+    income: Person['income'],
   }
 
   const selectSexIncome = ({sex, income}: Person): TaskProps => ({
@@ -299,15 +317,14 @@ console.group('4. Sukurtite masyvą su lytimis ir uždirbamu pinigų kiekiu, pag
 
   console.log('people', people);
   console.log('result', result);
-
 }
 console.groupEnd();
 
 console.group('5. Sukurtite masyvą su vardais, pavardėmis ir lytimi, pagal pradinį žmonių masyvą');
 {
   type TaskProps = {
-    name: Person["name"],
-    surname: Person["surname"],
+    name: Person['name'],
+    surname: Person['surname'],
     sex: Person['sex'],
   }
 
@@ -354,8 +371,8 @@ console.groupEnd();
 console.group('8. Atspausdinkite žmonių vardus ir pavardes, kurie turi mašinas');
 {
   type Identity = {
-    name: Person["name"],
-    surname: Person["surname"],
+    name: Person['name'],
+    surname: Person['surname'],
   }
 
   const personHasCar = ({ hasCar }: Person): boolean => Boolean(hasCar);
