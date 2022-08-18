@@ -393,6 +393,7 @@ console.group('9. Atspausdinkite žmones kurie yra susituokę');
 console.groupEnd();
 
 console.groupCollapsed('10. Sukurkite objektą, kuriame būtų apskaičiuotas vairuojančių žmonių kiekis pagal lytį');
+// feat: 5-8-9 homework
 {
   // ...sprendimas ir spausdinimas
 }
@@ -406,7 +407,7 @@ console.groupEnd();
 
 console.groupCollapsed('12. Suformuokite žmonių masyvą, kuriame nebūtų lyties, vardo ir pavardės');
 {
-   
+  
 }
 console.groupEnd();
 

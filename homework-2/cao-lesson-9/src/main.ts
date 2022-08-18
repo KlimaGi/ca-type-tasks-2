@@ -86,6 +86,8 @@ console.log('airVehicle1', airVehicle1);
 const waterVehicle1 = new WaterVehicle('water-minerva', 'weee', 2018, 2);
 console.log('waterVehicle1', waterVehicle1);
 
+// feat: 5-8-9 homework
+
 // 7. Tėvinės klasės Vehicle konstruktoriaus parametrus aprašykite objektu, ir perrašykite vaikinių klasių konstruktorius.
 
 // 8. Išskaidykite kodą atskirais failais
