@@ -48,15 +48,29 @@ console.group('1. Dėklo (Stack) duomenų struktūros kūrimas');
 
   // ↓↓↓ klasė ↓↓↓
   class Stack<T> {
+    private index: number;
+    [x: number]: T | undefined;
+
+    constructor(){
+      this.index = -1;
+    }
+
+    public push(data: T){
+      this.index += 1;
+      this[this.index] = data;
+    }
   }
   // ↑↑↑ klasė ↑↑↑
 
   // ↓↓↓ bendri kintamieji ↓↓↓
+  const numberStack = new Stack<number>();
+  const stringStack = new Stack<string>();
   // ↑↑↑ bendri kintamieji ↑↑↑
 
   // 5 min.
-  console.groupCollapsed('1.1. sukurkite konstruktorių, kuris nustatytų privačią savybę "index" į -1');
+  console.group('1.1. sukurkite konstruktorių, kuris nustatytų privačią savybę "index" į -1');
   {
+
   }
   console.groupEnd();
 

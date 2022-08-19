@@ -2,8 +2,18 @@
 console.group('1. Dėklo (Stack) duomenų struktūros kūrimas');
 {
     class Stack {
+        index;
+        constructor() {
+            this.index = -1;
+        }
+        push(data) {
+            this.index += 1;
+            this[this.index] = data;
+        }
     }
-    console.groupCollapsed('1.1. sukurkite konstruktorių, kuris nustatytų privačią savybę "index" į -1');
+    const numberStack = new Stack();
+    const stringStack = new Stack();
+    console.group('1.1. sukurkite konstruktorių, kuris nustatytų privačią savybę "index" į -1');
     {
     }
     console.groupEnd();
