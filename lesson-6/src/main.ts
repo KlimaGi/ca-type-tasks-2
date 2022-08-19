@@ -211,7 +211,7 @@ console.group('5. Sukurkite funkciją "groupBy", kuri priima masyvą objektų, i
 // sugrupuoti elementus pagal dinamine savybe
 // perrasyti funkcija kuri priima dinaminius parametrus
 {
-
+ 
 
 type GroupedObject<
   ObjectType extends {[key: string]: any}, 
