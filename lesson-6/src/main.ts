@@ -212,11 +212,11 @@ console.group('5. Sukurkite funkciją "groupBy", kuri priima masyvą objektų, i
 // perrasyti funkcija kuri priima dinaminius parametrus
 {
 
- 
+
 type GroupedObject<
-  ObjectType extends {[x in string]: any}, 
-  key extends keyof ObjectType
-  > = { [Key in ObjectType[key]]: ObjectType[] }
+  ObjectType extends {[key: string]: any}, 
+  Key extends keyof ObjectType
+  > = { [PropName in ObjectType[Key]]?: ObjectType[] }
 
   interface Person {
     city: string;
@@ -224,16 +224,17 @@ type GroupedObject<
     age: number;
   };
 
-  const groupBy = (arr: Person[], 
-    key: keyof Person,
-    ): GroupedObject<Person, keyof Person> => arr.reduce<any>(
-    (prevGroupedObject, person) => {
-
-      const groupName = person[key];
-      if(groupName in prevGroupedObject){
-        prevGroupedObject[groupName].push(person);
+  const groupBy = <
+  ObjectType extends {[key: string]: any},
+  Key extends keyof ObjectType,
+  >(arr: ObjectType[], key: Key) => arr.reduce<GroupedObject<ObjectType, Key>>(
+    (prevGroupedObject, element) => {
+      const groupedObject = {...prevGroupedObject};
+      const groupKey = element[key];
+      if(groupKey in groupedObject){
+        groupedObject[groupKey]?.push(element);
       }else{
-        prevGroupedObject[groupName] = [person];
+        groupedObject[groupKey] = [element];
       }
       return prevGroupedObject;
     }, 

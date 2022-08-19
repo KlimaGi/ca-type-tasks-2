@@ -30,6 +30,11 @@ console.log('mapById', mapById([
         name: 'Mrs. Baz',
     },
 ]));
+const dog = {
+    name: 'LG',
+    breed: 'Mutt',
+    age: 22,
+};
 const people = [
     {
         name: 'Jonas',
