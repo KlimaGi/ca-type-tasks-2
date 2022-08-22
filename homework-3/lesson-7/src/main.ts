@@ -170,37 +170,37 @@ console.group('2. Eilės (Queue) duomenų struktūros kūrimas');
 
   // ↓↓↓ klasė ↓↓↓
   class Queue<T> {
-    private index: number;
+    private lastElemIndex: number;
 
     [i: number]: T | undefined;
 
     constructor(){
-      this.index = -1;
+      this.lastElemIndex = -1;
     }
 
     // 1.4.
     get length(){
-      return this.index + 1;
+      return this.lastElemIndex + 1;
     }
 
     // 1.2.
     enqueue(data: T){
-      for (let i = this.index; i >= 0; i -= 1){
-        this[i + 1] = this[i];
-      }
-
-      this[0] = data;
-      this.index += 1;
+    // paduotam elementui priskiriamas indeksas [0]
+      this.lastElemIndex += 1;
+      this[this.lastElemIndex] = data;
     }
 
     // 1.3.
     dequeue(): T | undefined {
       const returnVal = this[0];
-      for (let i = 1; i <= this.index; i += 1){
+      for (let i = 1; i <= this.lastElemIndex; i += 1){
         this[i - 1] = this[i];
       }
-      delete this[this.index];
-      this.index -= 1;
+      
+      if(returnVal !== undefined){
+        delete this[this.lastElemIndex];
+        this.lastElemIndex -= 1;
+      }
 
       return returnVal;
     }
@@ -208,8 +208,8 @@ console.group('2. Eilės (Queue) duomenų struktūros kūrimas');
   // ↑↑↑ klasė ↑↑↑
 
   // ↓↓↓ bendri kintamieji ↓↓↓
-  const numberQueue = new Queue();
-  const stringQueue = new Queue();
+  const numberQueue = new Queue<number>();
+  const stringQueue = new Queue<string>();
   // ↑↑↑ bendri kintamieji ↑↑↑
 
   // 5 min.
@@ -221,7 +221,7 @@ console.group('2. Eilės (Queue) duomenų struktūros kūrimas');
   console.groupEnd();
 
   // 30 min
-  console.group('1.2. Sukurkite metodą "enqueue", kuris pridėtų elementą į struktūros priekį. Užtikrinkite kad kiti duomenys tavrkingai persislinktų ir indeksuotūsi');
+  console.group('1.2. Sukurkite metodą "enqueue", kuris pridėtų elementą į struktūros gala. Užtikrinkite kad kiti duomenys tavrkingai persislinktų ir indeksuotūsi');
   {
     numberQueue.enqueue(7);
     numberQueue.enqueue(4);
