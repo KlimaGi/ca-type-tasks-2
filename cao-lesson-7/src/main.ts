@@ -143,18 +143,51 @@ console.groupEnd();
 console.group('3. Sukurkite metodą pridėti elementui į sąrašo priekį.');
 {
   console.log('string list', stringList);
+  console.log('pridedamas 1', 'pirmas');
+  stringList.unshift('pirmas');
+  console.log('sarasas po pridejimo', { ...stringList });
 
+  console.log('pridedamas 2', 'antras');
+  stringList.unshift('antras');
+  console.log('sarasas po pridejimo', { ...stringList });
+
+  console.log('pridedamas 3', 'trecias');
+  stringList.unshift('trecias');
+  console.log('sarasas po pridejimo', { ...stringList });
 }
 console.groupEnd();
 
 console.group('4. Sukurkite metodą pridėti elementui į sąrašo galą.');
 {
+  console.log('number list', numberList);
 
+  console.log('pridedamas mazgas 1', 1);
+  numberList.push(1);
+  console.log('sarasas po pridejimo', { ...numberList });
+
+  console.log('pridedamas mazgas 2', 2);
+  numberList.push(2);
+  console.log('sarasas po pridejimo', { ...numberList });
+
+  console.log('pridedamas mazgas 3', 3);
+  numberList.push(3);
+  console.log('sarasas po pridejimo', { ...numberList });
 }
 console.groupEnd();
 
 console.group('5. Sukurkite metodą List.forEach klasėje List, kuris vykdytų parametru perduotą funkciją');
 {
+  console.log('string saraso spausdinimas');
+  stringList.forEach((str) => console.log(str));
 
+  const stringArr: string[] = [];
+  const putInStringArr = (x: number): void => {
+    stringArr.push(String(x));
+  };
+
+  console.log('number saraso spausdinimas');
+  numberList.forEach(putInStringArr);
+  const numberListStringRepresentation: string = stringArr.join(' -> ');
+  console.log(numberListStringRepresentation);
 }
 console.groupEnd();
