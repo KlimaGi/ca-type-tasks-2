@@ -1,71 +1,87 @@
 "use strict";
-console.group('1. Sukurkite klasę tėvinę Person vaikinėms klasėms ir išsaugokite joje bendrą funkcionalumą.');
+class ListNode {
+    data;
+    next;
+    constructor(data, next = null) {
+        this.data = data;
+        this.next = next;
+    }
+}
+;
+class List {
+    head;
+    tail;
+    constructor(data) {
+        if (data !== undefined) {
+            this.head = new ListNode(data);
+            this.tail = this.head;
+        }
+        else {
+            this.head = null;
+            this.tail = null;
+        }
+    }
+    unshift = (data) => {
+        const newNode = new ListNode(data);
+        if (this.head === null) {
+            this.head = newNode;
+            this.tail = newNode;
+        }
+        else {
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+    };
+    push = (data) => {
+        const newNode = new ListNode(data);
+        if (this.tail === null) {
+            this.head = newNode;
+            this.tail = newNode;
+        }
+        else {
+            this.tail.next = newNode;
+            this.tail = newNode;
+        }
+    };
+    forEach = (callback) => {
+        if (this.head === null)
+            return;
+        let currentNode = this.head;
+        while (true) {
+            if (currentNode.next === null)
+                break;
+            callback(currentNode.data);
+            currentNode = currentNode.next;
+        }
+    };
+}
+const stringList = new List();
+const numberList = new List(5);
+console.group('1. Sukurkitę sąrašo mazgo struktūrą ListNode, bet kokiam duomenų tipui');
 {
-    class Person {
-        static count = 0;
-        namePrivate;
-        surnamePrivate;
-        id;
-        constructor(name, surname) {
-            Person.count += 1;
-            this.id = `Person_${Person.count}`;
-            this.name = name;
-            this.surname = surname;
-        }
-        set name(value) {
-            this.namePrivate = value;
-        }
-        set surname(value) {
-            this.surnamePrivate = value;
-        }
-        get fullname() {
-            return `${this.namePrivate} ${this.surnamePrivate}`;
-        }
-    }
-    class Student extends Person {
-        marks;
-        constructor() {
-            super();
-            this.marks = [];
-        }
-        addMark(mark) {
-            if (mark < 1)
-                throw new Error('Pazimys turi buti didesnis nei 1');
-            if (mark > 10)
-                throw new Error('Pazimys turi buti mazesnis nei 10');
-            if (mark % 1 !== 0)
-                throw new Error('Pazimys turi buti sveikas skaicius');
-            this.marks.push(mark);
-        }
-    }
-    class Lecturer extends Person {
-        static MIN_SALARY = 1800;
-        static MAX_SALARY = 4400;
-        static GPM_PERC = 0.20;
-        static PSD_PERC = 0.0698;
-        static VSD_PERC = 0.1252;
-    }
-    const people = [
-        new Person('Markas', 'Byla'),
-        new Person('Leja', 'Tyla'),
-    ];
-    console.group('1.1. Sukurkite klasę Person, kurios objektams būtų galima priskirti vardą ir pavardę. Šios klasės objektams turi susigeneruoti id - unikalus raktas. Taip pat sukurkite get"erį fullname, kuris grąžina vardą ir pavardę atskirtus tarpu. Atspausdinkite kelis šios klasės objektus, ir pademonstruokite get"erio veikimą.');
-    {
-        console.log('people', people);
-        people.forEach((p) => console.log(p.fullname));
-    }
-    console.groupEnd();
-    console.group('1.2. Sukurkite klasę Student, kuri paveldėtų klasę Person. Be Person klasės paveldimų savybių, klasę Student turi turėti savybę "marks", kurioje bus saugomi studento pažymiai. Konstruktoriaus vykdymo metu, "marks" reikšmei turi būti sukuriamas tuščias masyvas. Student klasėje sukurkite metodą "addMark" kuris leistų įdėti naują pažymį - sveiką skaičių nuo 1 iki 10. Taip pat sukurkite get"erį "avg", kuris skaičiuotų studento vidurkį pagal esamus pažymius. Sukurkite bent 2 Student klasės objektus ir atspausdinkite visus get"erius ir pavaizduokite metodų funkcionalumą konsolėje.');
-    {
-    }
-    console.groupEnd();
-    console.group('1.3. Sukurkite klasę Lecturer, kuri paveldėtų klasę Person. Papildomai klasei Lecturer sukurkite savybę "salary", kuri privalo būti priskirta objekto sukūrimo metu. Inkapsuliuokite savybę "salary" taip, kad ji galėtų būti skaičius nuo 1800 iki 4400 su ne daugiau nei 2 skaičiais po kablelio. Taip pat sukurkite get"erį "salaryNeto", kuris atspausdintų suapvalintą atlyginimą iki sveikų skaičių atskaičiavus mokesčius: GPM 20%, PSD 6.98%, VSD 12.52%. Sukurkite bent 2 Lecturer klasės objektus ir atspausdinkite visus get"erius konsolėje.');
-    {
-    }
-    console.groupEnd();
-    console.group('1.4. Sukurkite viešai [1.] užduočiai pasiekiamą masyvą "allPeople". [1.1], [1.2] ir [1.3] užduotyse sukurtus objektus įdėkite į šį masyvą. Atspausdinkite visų žmonių elementų "fullname"');
-    {
-    }
+    const stringNode1 = { data: 'step', next: null };
+    const stringNode2 = { data: 'forward', next: stringNode1 };
+    console.log('stringNode1', stringNode1);
+    console.log('stringNode2', stringNode2);
+}
+console.groupEnd();
+console.group('2. Sukurkite sąrašo klasę List');
+{
+    console.log('empty string list', stringList);
+    console.log('number list', numberList);
+}
+console.groupEnd();
+console.group('3. Sukurkite metodą pridėti elementui į sąrašo priekį.');
+{
+    console.log('string list', stringList);
+}
+console.groupEnd();
+console.group('4. Sukurkite metodą pridėti elementui į sąrašo galą.');
+{
+}
+console.groupEnd();
+console.group('5. Sukurkite metodą List.forEach klasėje List, kuris vykdytų parametru perduotą funkciją');
+{
 }
 console.groupEnd();
 //# sourceMappingURL=main.js.map
