@@ -16,9 +16,11 @@ class App {
 
     this.htmlElement = foundHtmlElement;
     this.productsCollection = new ProductsCollection(products, categories, productsCategories);
+  }
 
-    // TODO: istrinti
-    console.log(this.htmlElement, this.productsCollection);
+  public initialize() {
+    const productsDataStringified = JSON.stringify(this.productsCollection.all, null, 4);
+    this.htmlElement.innerHTML = `<pre>${productsDataStringified}</pre>`
   }
 }
 
