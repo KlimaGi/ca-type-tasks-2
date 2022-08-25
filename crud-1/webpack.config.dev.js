@@ -12,7 +12,7 @@ module.exports = merge(webpackCommon, {
     },
     open: true,
     compress: true,
-    port: 3000,
+    port: 5000,
   },
 
   plugins: [
