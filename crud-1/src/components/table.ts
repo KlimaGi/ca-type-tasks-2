@@ -9,28 +9,39 @@ class Table<T extends string[]> {
     columns: Type,
     rowsData: Type[],
   ): boolean {
-    // TODO: patikrinti ar stulpeliu skaicius lygus kiekvienos eilutes stulpeliu skaiciui
-    console.log(columns, rowsData);
-    console.log(('-').repeat(34));
-
-    return true;
+    return rowsData.every((rowData) => rowData.length === columns.length);
   }
 
   public htmlElement!: HTMLTableElement;
 
   private props!: TableProps<T>;
 
-  private thread!: HTMLTableSectionElement;
+  private thead!: HTMLTableSectionElement;
 
   private tbody!: HTMLTableSectionElement;
 
   constructor(props: TableProps<T>) {
-    console.log(this.props, this.thread, this.tbody);
     const columnsIsCompatable = Table.checkColumnsCompatability(props.columns, props.rowsData);
     if (!columnsIsCompatable) {
       throw new Error('Lenteles stulpeliai nesuderinti su lenteles duomenimis');
     }
+    this.props = props;
+    this.htmlElement = document.createElement('table');
+    this.thead = document.createElement('thead');
+    this.tbody = document.createElement('tbody');
+
+    this.initialize();
   }
+
+  private initializeHead() {
+    const columnsHTMLString = this.props.columns
+      .map((column) => `<th>${column}</th>`)
+      .join('');
+
+    this.thead.innerHTML = `<tr>${columnsHTMLString}</tr>`;
+  }
+
+  private;
 }
 
 export default Table;
