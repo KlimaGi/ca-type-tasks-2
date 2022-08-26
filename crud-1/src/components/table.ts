@@ -5,7 +5,7 @@ type TableProps<Type> = {
 };
 
 class Table<T extends string[]> {
-  private static checkColumnsCompatability<Type extends string[]>(
+  private static checkColumnsCompatibility<Type extends string[]>(
     columns: Type,
     rowsData: Type[],
   ): boolean {
@@ -21,8 +21,8 @@ class Table<T extends string[]> {
   private tbody: HTMLTableSectionElement;
 
   constructor(props: TableProps<T>) {
-    const columnsIsCompatable = Table.checkColumnsCompatability(props.columns, props.rowsData);
-    if (!columnsIsCompatable) {
+    const columnsIsCompatible = Table.checkColumnsCompatibility(props.columns, props.rowsData);
+    if (!columnsIsCompatible) {
       throw new Error('Lenteles stulpeliai nesuderinti su lenteles duomenimis');
     }
     this.props = props;
