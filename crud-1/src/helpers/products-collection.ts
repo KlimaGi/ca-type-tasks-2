@@ -3,19 +3,25 @@ import Category from '../types/category';
 import ProductCategory from '../types/product-category';
 import ProductJoined from '../types/product-joined';
 
+type ProductsCollectionProps = {
+  products: Product[],
+  categories: Category[],
+  productsCategories: ProductCategory[]
+};
+
 class ProductsCollection {
-  constructor(
-    private products: Product[],
-    private categories: Category[],
-    private productsCategories: ProductCategory[],
-  ) { }
+  private props: ProductsCollectionProps;
+
+  public constructor(props: ProductsCollectionProps) {
+    this.props = JSON.parse(JSON.stringify(props));
+  }
 
   private joinProduct(product: Product): ProductJoined {
-    const categoriesIds = this.productsCategories
+    const categoriesIds = this.props.productsCategories
       .filter((productCategory) => productCategory.productId === product.id)
       .map((productCategory) => productCategory.categoryId);
 
-    const categoryTitles = this.categories
+    const categoryTitles = this.props.categories
       .filter((category) => categoriesIds.includes(category.id))
       .map((category) => category.title);
 
@@ -28,7 +34,7 @@ class ProductsCollection {
   }
 
   public get all(): ProductJoined[] {
-    return this.products.map((product) => this.joinProduct(product));
+    return this.props.products.map((product) => this.joinProduct(product));
     // return this.products.map(this.joinProduct.bind(this));
   }
 }

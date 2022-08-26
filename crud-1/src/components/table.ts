@@ -12,13 +12,13 @@ class Table<T extends string[]> {
     return rowsData.every((rowData) => rowData.length === columns.length);
   }
 
-  public htmlElement!: HTMLTableElement;
+  public htmlElement: HTMLTableElement;
 
-  private props!: TableProps<T>;
+  private props: TableProps<T>;
 
-  private thead!: HTMLTableSectionElement;
+  private thead: HTMLTableSectionElement;
 
-  private tbody!: HTMLTableSectionElement;
+  private tbody: HTMLTableSectionElement;
 
   constructor(props: TableProps<T>) {
     const columnsIsCompatable = Table.checkColumnsCompatability(props.columns, props.rowsData);
@@ -34,6 +34,8 @@ class Table<T extends string[]> {
   }
 
   private initializeHead() {
+    this.thead.className = 'table';
+
     const columnsHTMLString = this.props.columns
       .map((column) => `<th>${column}</th>`)
       .join('');
@@ -41,7 +43,31 @@ class Table<T extends string[]> {
     this.thead.innerHTML = `<tr>${columnsHTMLString}</tr>`;
   }
 
-  private;
+  private initializeBody() {
+    const rowsDataHTMLString = this.props.rowsData
+      .map((rowData) => {
+        const rowHTMLString = rowData
+          .map((data) => `<td>${data}</td>`)
+          .join('');
+
+        return `<td>${rowHTMLString}</td>`;
+      })
+      .join('');
+
+    this.tbody.innerHTML = rowsDataHTMLString;
+  }
+
+  private initialize() {
+    this.htmlElement.className = 'table table-striped';
+
+    this.initializeHead();
+    this.initializeBody();
+
+    this.htmlElement.append(
+      this.thead,
+      this.tbody,
+    );
+  }
 }
 
 export default Table;

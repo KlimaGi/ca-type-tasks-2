@@ -1,12 +1,27 @@
-import ProductsCollection from "../helpers/products-collection";
+import ProductsCollection from '../helpers/products-collection';
 import products from '../data/products';
 import categories from '../data/categories';
 import productsCategories from '../data/products-categories';
+import Table from './table';
+import stringifyPropValues from '../helpers/stringify-prop-values';
+import ProductJoined from '../types/product-joined';
+
+type ProductTableRow = [string, string, string, string, string];
+
+const formatProductTableRow = (product: ProductJoined): ProductTableRow => {
+  const {
+    id, title, price, description, categories: categoryString,
+  } = stringifyPropValues(product);
+
+  return [id, title, price, description ?? '', categoryString];
+};
 
 class App {
   private htmlElement: HTMLElement;
 
   private productsCollection: ProductsCollection;
+
+  private productsTable: Table<ProductTableRow>;
 
   constructor(selector: string) {
     const foundHtmlElement = document.querySelector<HTMLElement>(selector);
@@ -15,12 +30,21 @@ class App {
     }
 
     this.htmlElement = foundHtmlElement;
-    this.productsCollection = new ProductsCollection(products, categories, productsCategories);
+    this.productsCollection = new ProductsCollection({ products, categories, productsCategories });
+
+    this.productsTable = new Table({
+      title: 'Visi produktai',
+      columns: ['Id', 'Pavadinimas', 'Kaina', 'Aprasymas', 'Kategorijos'],
+      rowsData: this.productsCollection.all.map(formatProductTableRow),
+    });
   }
 
   public initialize() {
-    const productsDataStringified = JSON.stringify(this.productsCollection.all, null, 4);
-    this.htmlElement.innerHTML = `<pre>${productsDataStringified}</pre>`
+    const container = document.createElement('div');
+    container.className = 'container mt-5';
+    container.append(this.productsTable.htmlElement);
+
+    this.htmlElement.append(container);
   }
 }
 
