@@ -3,7 +3,7 @@ import cars from '../data/cars';
 import brands from '../data/brands';
 import models from '../data/models';
 import CarsCollection from '../helpers/cars-collection';
-import stringifyProps, { StringifyObjectProps } from '../helpers/stingify-props';
+import stringifyProps, { StringifyObjectProps } from '../helpers/stringify-props';
 import CarJoined from '../types/car-joined';
 import SelectField from './select-field';
 
