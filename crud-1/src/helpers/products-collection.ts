@@ -16,7 +16,7 @@ class ProductsCollection {
     this.props = JSON.parse(JSON.stringify(props));
   }
 
-  private joinProduct(product: Product): ProductJoined {
+  public joinProduct(product: Product): ProductJoined {
     const categoriesIds = this.props.productsCategories
       .filter((productCategory) => productCategory.productId === product.id)
       .map((productCategory) => productCategory.categoryId);
