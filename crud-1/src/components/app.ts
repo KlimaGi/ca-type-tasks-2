@@ -32,6 +32,8 @@ class App {
     this.htmlElement = foundHtmlElement;
     this.productsCollection = new ProductsCollection({ products, categories, productsCategories });
 
+    console.log('productsCollection.all', productsCollection.all);
+
     this.productsTable = new Table({
       title: 'Visi produktai',
       columns: ['Id', 'Pavadinimas', 'Kaina', 'Aprasymas', 'Kategorijos'],
